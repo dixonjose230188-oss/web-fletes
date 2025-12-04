@@ -11,9 +11,9 @@
     "buttonText": "Cotizar Ahora"
   },
   "services": {
-    "title": "Nuestros Servicios",
+    "title": "NUESTROS SERVICIOS",
     "subtitle": "Soluciones integrales para todas tus necesidades de transporte y mudanza.",
-    "fleetTitle": "Nuestros camiones de Fletes Matcris",
+    "fleetTitle": "Flota de camiones Matcris",
     "items": [
       {
         "id": "transport",
