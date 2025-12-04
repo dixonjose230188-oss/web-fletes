@@ -13,16 +13,40 @@ collections:
         label: "Información General y Servicios"
         name: "site_content"
         fields:
-          - {label: "Teléfono", name: "general", widget: "object", fields: [{label: "Número", name: "phone"}, {label: "Link WhatsApp", name: "whatsappLink"}, {label: "Link Instagram", name: "instagramLink"}, {label: "Email", name: "email"}]}
-          - {label: "Hero (Inicio)", name: "hero", widget: "object", fields: [{label: "Título", name: "title"}, {label: "Subtítulo", name: "subtitle"}, {label: "Texto Botón", name: "buttonText"}]}
-          - {label: "Servicios", name: "services", widget: "object", fields: [
-              {label: "Título Sección", name: "title"},
-              {label: "Subtítulo Sección", name: "subtitle"},
-              {label: "Título Flota", name: "fleetTitle"},
-              {label: "Lista de Servicios", name: "items", widget: "list", fields: [
-                {label: "ID", name: "id", widget: "hidden"},
-                {label: "Título", name: "title"},
-                {label: "Descripción", name: "description"},
-                {label: "Imagen", name: "image", widget: "image"}
-              ]}
-            ]}
+          - label: "Información de Contacto"
+            name: "general"
+            widget: "object"
+            collapsed: false
+            fields:
+              - {label: "Número de Teléfono", name: "phone", widget: "string", hint: "Ej: +56 9 1234 5678"}
+              - {label: "Enlace WhatsApp", name: "whatsappLink", widget: "string", hint: "https://wa.me/..."}
+              - {label: "Enlace Instagram", name: "instagramLink", widget: "string", hint: "https://instagram.com/..."}
+              - {label: "Correo Electrónico", name: "email", widget: "string"}
+
+          - label: "Sección Principal (Hero)"
+            name: "hero"
+            widget: "object"
+            collapsed: false
+            fields:
+              - {label: "Título Principal", name: "title", widget: "string"}
+              - {label: "Subtítulo", name: "subtitle", widget: "text"}
+              - {label: "Texto del Botón", name: "buttonText", widget: "string"}
+
+          - label: "Sección de Servicios"
+            name: "services"
+            widget: "object"
+            collapsed: false
+            fields:
+              - {label: "Título de la Sección", name: "title", widget: "string"}
+              - {label: "Bajada / Subtítulo", name: "subtitle", widget: "text"}
+              - {label: "Título Sección Flota", name: "fleetTitle", widget: "string"}
+              - label: "Lista de Servicios"
+                name: "items"
+                widget: "list"
+                collapsed: false
+                summary: "{{fields.title}}"
+                fields:
+                  - {label: "ID Interno (No tocar)", name: "id", widget: "string", required: true}
+                  - {label: "Título del Servicio", name: "title", widget: "string"}
+                  - {label: "Descripción", name: "description", widget: "text"}
+                  - {label: "Imagen", name: "image", widget: "image"}
