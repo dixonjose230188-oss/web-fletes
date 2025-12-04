@@ -92,13 +92,46 @@ var SiteContentPreview = createClass({
                 )
             ),
 
-            // Quote Form Preview (Mockup)
+            // Quote Form Preview (Visual)
             h('section', { className: 'quote-section', style: { padding: '5rem 0', background: 'white' } },
                 h('div', { className: 'container' },
                     h('h2', { className: 'section-title' }, quoteForm.title || "Cotiza tu Flete"),
                     h('p', { className: 'section-subtitle' }, quoteForm.subtitle || "Completa el formulario..."),
-                    h('div', { className: 'form-container', style: { maxWidth: '800px', margin: '0 auto', padding: '2rem', background: '#f9f9f9', borderRadius: '10px' } },
-                        h('p', { style: { textAlign: 'center', color: '#999' } }, '[Aquí se mostrará el formulario de cotización real]')
+
+                    h('div', { className: 'form-container', style: { maxWidth: '800px', margin: '0 auto', padding: '2rem', background: '#fff', borderRadius: '10px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' } },
+                        h('div', { className: 'quote-form' },
+                            // Service Type
+                            h('div', { className: 'form-group full-width', style: { marginBottom: '1.5rem' } },
+                                h('label', { style: { display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' } }, 'Tipo de Servicio'),
+                                h('div', { style: { display: 'flex', gap: '1rem' } },
+                                    h('label', { style: { display: 'flex', alignItems: 'center', gap: '0.5rem' } }, h('input', { type: 'radio', name: 'type', checked: true }), 'Personal / Mudanza'),
+                                    h('label', { style: { display: 'flex', alignItems: 'center', gap: '0.5rem' } }, h('input', { type: 'radio', name: 'type' }), 'Empresarial')
+                                )
+                            ),
+                            // Name & Phone
+                            h('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' } },
+                                h('div', { className: 'form-group' },
+                                    h('label', { style: { display: 'block', marginBottom: '0.5rem' } }, 'Nombre y Apellido'),
+                                    h('input', { type: 'text', className: 'input', placeholder: 'Ej: Juan Pérez', style: { width: '100%', padding: '0.8rem', border: '1px solid #ddd', borderRadius: '8px' } })
+                                ),
+                                h('div', { className: 'form-group' },
+                                    h('label', { style: { display: 'block', marginBottom: '0.5rem' } }, 'Teléfono'),
+                                    h('input', { type: 'tel', className: 'input', placeholder: '+56 9 ...', style: { width: '100%', padding: '0.8rem', border: '1px solid #ddd', borderRadius: '8px' } })
+                                )
+                            ),
+                            // Address
+                            h('div', { className: 'form-group', style: { marginBottom: '1rem' } },
+                                h('label', { style: { display: 'block', marginBottom: '0.5rem' } }, 'Dirección'),
+                                h('input', { type: 'text', className: 'input', placeholder: 'Buscar dirección...', style: { width: '100%', padding: '0.8rem', border: '1px solid #ddd', borderRadius: '8px' } })
+                            ),
+                            // Description
+                            h('div', { className: 'form-group', style: { marginBottom: '1rem' } },
+                                h('label', { style: { display: 'block', marginBottom: '0.5rem' } }, 'Descripción de la Carga'),
+                                h('textarea', { rows: 3, style: { width: '100%', padding: '0.8rem', border: '1px solid #ddd', borderRadius: '8px' }, placeholder: 'Describa los muebles...' })
+                            ),
+                            // Button
+                            h('button', { className: 'btn btn-primary', style: { width: '100%', marginTop: '1rem' } }, 'Enviar Cotización por WhatsApp')
+                        )
                     )
                 )
             ),
@@ -109,6 +142,10 @@ var SiteContentPreview = createClass({
                     h('div', { style: { marginBottom: '2rem' } },
                         h('h3', { style: { color: 'white', marginBottom: '1rem' } }, 'Fletes Matcris'),
                         h('p', {}, footer.text || "Texto del footer")
+                    ),
+                    h('div', { style: { display: 'flex', justifyContent: 'center', gap: '2rem', marginBottom: '2rem' } },
+                        h('span', {}, general.phone || '+56 9 ...'),
+                        h('span', {}, '@fletesmatcris')
                     ),
                     h('div', { style: { borderTop: '1px solid #555', paddingTop: '1rem' } },
                         h('p', { style: { opacity: 0.7, fontSize: '0.9rem' } }, footer.copyright || "Copyright")
