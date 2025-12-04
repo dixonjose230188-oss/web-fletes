@@ -67,6 +67,16 @@ ${formData.location ? `*Ubicación Mapa:* https://www.google.com/maps?q=${formDa
     `;
 
         const encodedMessage = encodeURIComponent(message);
+
+        // Conversion Tracking Placeholder
+        // if (window.gtag) {
+        //     window.gtag('event', 'conversion', {
+        //         'send_to': 'AW-XXXXXXXXXX/Label',
+        //         'event_callback': () => console.log('Conversion sent')
+        //     });
+        // }
+        console.log('Conversion event triggered: WhatsApp Click');
+
         window.open(`https://wa.me/56953303129?text=${encodedMessage}`, '_blank');
     };
 
