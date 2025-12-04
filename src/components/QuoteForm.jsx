@@ -5,6 +5,7 @@ import { Calendar, Clock, MapPin, User, Phone, FileText, Truck, Package, ArrowUp
 import './QuoteForm.css';
 
 const QuoteForm = () => {
+    const { quoteForm } = content;
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
@@ -71,8 +72,8 @@ ${formData.location ? `*Ubicación Mapa:* https://www.google.com/maps?q=${formDa
     return (
         <section className="quote-section" id="cotizar">
             <div className="container">
-                <h2 className="section-title">Cotiza tu Flete</h2>
-                <p className="section-subtitle">Completa el formulario y te responderemos a la brevedad.</p>
+                <h2 className="section-title">{quoteForm?.title || "Cotiza tu Flete"}</h2>
+                <p className="section-subtitle">{quoteForm?.subtitle || "Completa el formulario y te responderemos a la brevedad."}</p>
 
                 <div className="form-container">
                     <form onSubmit={handleSubmit} className="quote-form">

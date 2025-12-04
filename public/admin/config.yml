@@ -13,33 +13,47 @@ collections:
         label: "Información General y Servicios"
         name: "site_content"
         fields:
-          - label: "Información de Contacto"
+          - label: "🎨 Personalización Visual (Colores)"
+            name: "theme"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Color Principal (Azul)", name: "primary", widget: "color"}
+              - {label: "Color Acento (Naranja)", name: "accent", widget: "color"}
+              - {label: "Color Acento Suave (Verde)", name: "accentSoft", widget: "color"}
+              - {label: "Fondo Claro", name: "bgLight", widget: "color"}
+              - {label: "Color Texto", name: "text", widget: "color"}
+
+          - label: "📞 Información de Contacto y Logo"
             name: "general"
             widget: "object"
-            collapsed: false
+            collapsed: true
             fields:
+              - {label: "Logo del Sitio", name: "logo", widget: "image"}
               - {label: "Número de Teléfono", name: "phone", widget: "string", hint: "Ej: +56 9 1234 5678"}
               - {label: "Enlace WhatsApp", name: "whatsappLink", widget: "string", hint: "https://wa.me/..."}
               - {label: "Enlace Instagram", name: "instagramLink", widget: "string", hint: "https://instagram.com/..."}
               - {label: "Correo Electrónico", name: "email", widget: "string"}
 
-          - label: "Sección Principal (Hero)"
+          - label: "🏠 Sección Principal (Hero)"
             name: "hero"
             widget: "object"
-            collapsed: false
+            collapsed: true
             fields:
               - {label: "Título Principal", name: "title", widget: "string"}
               - {label: "Subtítulo", name: "subtitle", widget: "text"}
               - {label: "Texto del Botón", name: "buttonText", widget: "string"}
+              - {label: "Imagen Principal (Camión)", name: "image", widget: "image"}
 
-          - label: "Sección de Servicios"
+          - label: "🚚 Sección de Servicios"
             name: "services"
             widget: "object"
-            collapsed: false
+            collapsed: true
             fields:
               - {label: "Título de la Sección", name: "title", widget: "string"}
               - {label: "Bajada / Subtítulo", name: "subtitle", widget: "text"}
               - {label: "Título Sección Flota", name: "fleetTitle", widget: "string"}
+              - {label: "Imagen de la Flota", name: "fleetImage", widget: "image"}
               - label: "Lista de Servicios"
                 name: "items"
                 widget: "list"
@@ -50,3 +64,19 @@ collections:
                   - {label: "Título del Servicio", name: "title", widget: "string"}
                   - {label: "Descripción", name: "description", widget: "text"}
                   - {label: "Imagen", name: "image", widget: "image"}
+
+          - label: "📝 Formulario de Cotización"
+            name: "quoteForm"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Título del Formulario", name: "title", widget: "string"}
+              - {label: "Subtítulo", name: "subtitle", widget: "string"}
+
+          - label: "🦶 Pie de Página (Footer)"
+            name: "footer"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Texto Descriptivo", name: "text", widget: "text"}
+              - {label: "Copyright", name: "copyright", widget: "string"}
