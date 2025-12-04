@@ -26,7 +26,7 @@ const Services = () => {
                     <h3 className="fleet-title">{services.fleetTitle}</h3>
                     <div className="fleet-image-container">
                         <img
-                            src="/assets/trucks-fleet.jpg"
+                            src={services.fleetImage || "/assets/trucks-fleet.jpg"}
                             alt="Flota de camiones Fletes Matcris"
                             className="fleet-image"
                             loading="lazy"

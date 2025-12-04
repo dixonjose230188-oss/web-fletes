@@ -9,7 +9,21 @@ import Services from './components/Services';
 import { HelmetProvider } from 'react-helmet-async';
 import SEO from './components/SEO';
 
+import content from './data/siteContent.json';
+
 function App() {
+  // Apply theme colors from content
+  React.useEffect(() => {
+    if (content.theme) {
+      const root = document.documentElement;
+      root.style.setProperty('--color-primary', content.theme.primary);
+      root.style.setProperty('--color-accent', content.theme.accent);
+      root.style.setProperty('--color-accent-soft', content.theme.accentSoft);
+      root.style.setProperty('--color-bg-light', content.theme.bgLight);
+      root.style.setProperty('--color-text', content.theme.text);
+    }
+  }, []);
+
   return (
     <HelmetProvider>
       <div className="app">

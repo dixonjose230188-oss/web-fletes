@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MapSelector from './MapSelector';
 import AddressAutocomplete from './AddressAutocomplete';
+import content from '../data/siteContent.json';
 import { Calendar, Clock, MapPin, User, Phone, FileText, Truck, Package, ArrowUpCircle, Briefcase, Box } from 'lucide-react';
 import './QuoteForm.css';
 
