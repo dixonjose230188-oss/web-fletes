@@ -1,0 +1,38 @@
+{
+  "general": {
+    "phone": "+56 9 5330 3129",
+    "whatsappLink": "https://wa.me/56953303129",
+    "instagramLink": "https://instagram.com/fletesmatcris",
+    "email": "contacto@fletesmatcris.cl"
+  },
+  "hero": {
+    "title": "Fletes y Mudanzas Profesionales",
+    "subtitle": "Servicio rápido, seguro y confiable en todo Chile. Cotiza tu traslado hoy mismo.",
+    "buttonText": "Cotizar Ahora"
+  },
+  "services": {
+    "title": "Nuestros Servicios",
+    "subtitle": "Soluciones integrales para todas tus necesidades de transporte y mudanza.",
+    "fleetTitle": "Nuestros camiones de Fletes Matcris",
+    "items": [
+      {
+        "id": "transport",
+        "title": "Transporte de Carga",
+        "description": "Llevamos tu carga del punto A al punto B. Ideal para mudanzas donde tú te encargas de la carga y descarga. Opción de ayudante disponible.",
+        "image": "/assets/service-transport-new.jpg"
+      },
+      {
+        "id": "removal",
+        "title": "Retiro de Materiales",
+        "description": "Servicio exclusivo para empresas. Retiramos materiales, escombros o excedentes directamente desde tu lugar de trabajo sin que tengas que moverte.",
+        "image": "/assets/service-removal.jpg"
+      },
+      {
+        "id": "packing",
+        "title": "Servicio de Embalaje",
+        "description": "Protegemos tu carga con film y cartones de alta calidad. Aseguramos que tus pertenencias lleguen intactas a su destino.",
+        "image": "/assets/service-packing-new.jpg"
+      }
+    ]
+  }
+}

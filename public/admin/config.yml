@@ -1,0 +1,28 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/assets"
+public_folder: "/assets"
+
+collections:
+  - name: "content"
+    label: "Contenido del Sitio"
+    files:
+      - file: "src/data/siteContent.json"
+        label: "Información General y Servicios"
+        name: "site_content"
+        fields:
+          - {label: "Teléfono", name: "general", widget: "object", fields: [{label: "Número", name: "phone"}, {label: "Link WhatsApp", name: "whatsappLink"}, {label: "Link Instagram", name: "instagramLink"}, {label: "Email", name: "email"}]}
+          - {label: "Hero (Inicio)", name: "hero", widget: "object", fields: [{label: "Título", name: "title"}, {label: "Subtítulo", name: "subtitle"}, {label: "Texto Botón", name: "buttonText"}]}
+          - {label: "Servicios", name: "services", widget: "object", fields: [
+              {label: "Título Sección", name: "title"},
+              {label: "Subtítulo Sección", name: "subtitle"},
+              {label: "Título Flota", name: "fleetTitle"},
+              {label: "Lista de Servicios", name: "items", widget: "list", fields: [
+                {label: "ID", name: "id", widget: "hidden"},
+                {label: "Título", name: "title"},
+                {label: "Descripción", name: "description"},
+                {label: "Imagen", name: "image", widget: "image"}
+              ]}
+            ]}
