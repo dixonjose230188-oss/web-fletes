@@ -1,0 +1,36 @@
+{
+  "faq": [
+    {
+      "pregunta": "¿Cuánto cuesta un flete en Santiago?",
+      "respuesta": "El precio depende de la distancia, el volumen de la carga, el tipo de acceso en origen y destino, y si necesitás ayudante. Por eso cotizamos caso a caso: enviás los datos por WhatsApp y te respondemos con un valor cerrado, sin costo por cotizar."
+    },
+    {
+      "pregunta": "¿Trabajan los fines de semana?",
+      "respuesta": "Sí. Atendemos de lunes a domingo entre las 8:00 y las 21:00. Fuera de ese horario se puede coordinar previamente por WhatsApp."
+    },
+    {
+      "pregunta": "¿Incluye ayudante para cargar y descargar?",
+      "respuesta": "El ayudante es opcional y tiene un costo adicional. Si preferís cargar vos, contratás solo el traslado. Si necesitás que nos encarguemos de todo, agregás el ayudante al momento de cotizar."
+    },
+    {
+      "pregunta": "¿Qué pasa si el edificio no tiene ascensor?",
+      "respuesta": "Se puede hacer igual, pero afecta el tiempo y el valor del servicio. Por eso al cotizar preguntamos el tipo de acceso en el origen y en el destino: ascensor, escaleras o casa en primer piso."
+    },
+    {
+      "pregunta": "¿Cuánto puede cargar el camión?",
+      "respuesta": "Trabajamos con un camión de 1,5 toneladas de capacidad. Sirve para mudanzas de departamentos de uno a tres ambientes, traslados de materiales y retiros de mercadería. Para volúmenes mayores se coordinan viajes adicionales."
+    },
+    {
+      "pregunta": "¿Van a comunas fuera de Santiago?",
+      "respuesta": "Nuestra cobertura habitual es toda la Región Metropolitana. Para traslados a regiones se cotiza aparte según el destino."
+    },
+    {
+      "pregunta": "¿Emiten boleta o factura?",
+      "respuesta": "Sí, trabajamos con empresas de forma habitual y emitimos el documento tributario que necesites. Indicalo al momento de cotizar para preparar la documentación."
+    },
+    {
+      "pregunta": "¿Cómo se asegura la carga durante el traslado?",
+      "respuesta": "Usamos fajas, amarras y esquineros para fijar la carga al camión. Para muebles, colchones y superficies delicadas ofrecemos además el servicio de embalaje con film y cartón."
+    }
+  ]
+}

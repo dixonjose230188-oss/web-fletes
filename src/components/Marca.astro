@@ -1,0 +1,143 @@
+---
+/**
+ * Marca del sitio: ícono vectorial + nombre como texto real.
+ *
+ * El logo original es un PNG cuadrado de 1024px con el nombre quemado
+ * dentro y fondo azul sólido: a 40px de alto el texto era ilegible y
+ * dejaba un bloque azul flotando sobre el header blanco. Construirlo en
+ * SVG + texto lo hace nítido en cualquier pantalla, legible para Google
+ * y accesible para lectores de pantalla.
+ */
+interface Props {
+  /** 'claro' para fondos oscuros (pie de página). */
+  variante?: 'oscuro' | 'claro';
+  class?: string;
+}
+
+const { variante = 'oscuro', class: clase = '' } = Astro.props;
+---
+
+<span class:list={['marca', `marca-${variante}`, clase]}>
+  <svg
+    class="marca-icono"
+    viewBox="0 0 44 32"
+    fill="none"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <!-- Líneas de velocidad -->
+    <path
+      d="M2 9h7M0 16h6M3 23h6"
+      stroke="currentColor"
+      stroke-width="2.4"
+      stroke-linecap="round"
+      opacity="0.55"
+    ></path>
+    <!-- Caja de carga -->
+    <rect
+      x="13"
+      y="5"
+      width="17"
+      height="16"
+      rx="2.2"
+      stroke="currentColor"
+      stroke-width="2.4"
+    ></rect>
+    <!-- Cabina -->
+    <path
+      d="M30 11h5.4a2 2 0 0 1 1.7 1l3.1 5a2 2 0 0 1 .3 1.05V19a2 2 0 0 1-2 2H30V11Z"
+      stroke="currentColor"
+      stroke-width="2.4"
+      stroke-linejoin="round"
+    ></path>
+    <!-- Ruedas -->
+    <circle cx="19" cy="25" r="3.4" stroke="currentColor" stroke-width="2.4"
+    ></circle>
+    <circle cx="34" cy="25" r="3.4" stroke="currentColor" stroke-width="2.4"
+    ></circle>
+  </svg>
+
+  <span class="marca-texto">
+    <span class="marca-nombre">Fletes <strong>Matcris</strong></span>
+    <span class="marca-bajada">Fletes y mudanzas · Santiago</span>
+  </span>
+</span>
+
+<style>
+  .marca {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--e-3);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .marca-icono {
+    width: 40px;
+    height: 29px;
+    flex-shrink: 0;
+    color: var(--azul-600);
+  }
+
+  .marca-claro .marca-icono {
+    color: var(--blanco);
+  }
+
+  .marca-texto {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .marca-nombre {
+    font-size: 1.0625rem;
+    font-weight: var(--peso-medio);
+    letter-spacing: -0.02em;
+    color: var(--azul-900);
+    white-space: nowrap;
+  }
+
+  .marca-nombre strong {
+    font-weight: var(--peso-black);
+  }
+
+  .marca-claro .marca-nombre {
+    color: var(--blanco);
+  }
+
+  .marca-bajada {
+    font-size: 0.6875rem;
+    font-weight: var(--peso-medio);
+    letter-spacing: 0.03em;
+    color: var(--texto-tenue);
+    white-space: nowrap;
+  }
+
+  .marca-claro .marca-bajada {
+    color: var(--azul-100);
+  }
+
+  /* En pantallas muy angostas la bajada se saca para no apretar el header */
+  @media (max-width: 359px) {
+    .marca-bajada {
+      display: none;
+    }
+    .marca-icono {
+      width: 34px;
+      height: 25px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .marca-icono {
+      width: 46px;
+      height: 33px;
+    }
+    .marca-nombre {
+      font-size: 1.1875rem;
+    }
+    .marca-bajada {
+      font-size: 0.75rem;
+    }
+  }
+</style>

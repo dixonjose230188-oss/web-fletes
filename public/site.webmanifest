@@ -1,0 +1,23 @@
+{
+  "name": "Fletes Matcris",
+  "short_name": "Matcris",
+  "description": "Fletes y mudanzas en Santiago y la Región Metropolitana",
+  "lang": "es-CL",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1550c4",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo-fletes-matcris.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

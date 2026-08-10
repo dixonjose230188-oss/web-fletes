@@ -1,0 +1,62 @@
+---
+/**
+ * Inyecta GTM (o GA4 directo) solo si hay un ID configurado.
+ * Sin ID configurado, el sitio no carga absolutamente nada de terceros.
+ */
+import { analitica } from '../data/analitica.js';
+
+const { gtmId, ga4Id } = analitica;
+---
+
+{
+  gtmId && (
+    <script is:inline define:vars={{ gtmId }}>
+      {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);`}
+    </script>
+  )
+}
+
+{
+  !gtmId && ga4Id && (
+    <>
+      <script
+        is:inline
+        async
+        src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}
+      />
+      <script is:inline define:vars={{ ga4Id }}>
+        {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config',ga4Id);`}
+      </script>
+    </>
+  )
+}
+
+<script is:inline>
+  /**
+   * Capa de eventos propia. Empuja al dataLayer sin importar qué
+   * herramienta esté conectada (GA4, Ads, Meta, Bing). Si no hay
+   * ninguna, no falla: el dataLayer queda en memoria y no pasa nada.
+   *
+   * Los disparadores de conversión se configuran después en GTM
+   * escuchando estos nombres de evento.
+   */
+  window.dataLayer = window.dataLayer || [];
+
+  window.registrarEvento = function (nombre, datos) {
+    window.dataLayer.push(Object.assign({ event: nombre }, datos || {}));
+  };
+
+  document.addEventListener('click', function (e) {
+    var enlace = e.target.closest('a');
+    if (!enlace) return;
+
+    var href = enlace.getAttribute('href') || '';
+    var origen = enlace.dataset.origen || 'sin-especificar';
+
+    if (href.indexOf('wa.me') !== -1) {
+      window.registrarEvento('clic_whatsapp', { origen: origen });
+    } else if (href.indexOf('tel:') === 0) {
+      window.registrarEvento('clic_telefono', { origen: origen });
+    }
+  });
+</script>

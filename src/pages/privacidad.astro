@@ -1,0 +1,158 @@
+---
+import Base from '../layouts/Base.astro';
+import Migas from '../components/Migas.astro';
+import { negocio } from '../data/negocio.js';
+import { analitica } from '../data/analitica.js';
+import { migasSchema } from '../lib/jsonld.js';
+
+const migas = [
+  { texto: 'Inicio', href: '/' },
+  { texto: 'Política de privacidad', href: '/privacidad' },
+];
+
+const actualizado = '10 de agosto de 2026';
+const hayMedicion = Boolean(analitica.gtmId || analitica.ga4Id);
+---
+
+<Base
+  titulo="Política de privacidad"
+  descripcion={`Cómo trata ${negocio.nombre} los datos de quienes visitan el sitio y solicitan una cotización.`}
+  noindex={false}
+  jsonLd={[migasSchema(migas)]}
+>
+  <Migas items={migas} />
+
+  <section class="seccion">
+    <div class="contenedor-angosto">
+      <h1>Política de privacidad</h1>
+      <p class="actualizado">Última actualización: {actualizado}</p>
+
+      <div class="prosa">
+        <h2>Quiénes somos</h2>
+        <p>
+          Este sitio pertenece a <strong>{negocio.nombre}</strong>, un servicio
+          de fletes, mudanzas y transporte de carga que opera en {negocio.ciudad}
+          y la {negocio.region}, Chile. Podés contactarnos al {negocio.telefono}.
+        </p>
+
+        <h2>Qué datos recogemos</h2>
+        <p>
+          El formulario de cotización de este sitio <strong>no envía tus datos a
+          ningún servidor nuestro y no los almacena</strong>. Lo que hace es
+          ordenar lo que escribiste en un mensaje de WhatsApp que se abre en tu
+          dispositivo. Vos decidís si lo enviás o no.
+        </p>
+        <p>
+          Si decidís enviarlo, tus datos pasan a WhatsApp y quedan en esa
+          conversación, sujetos a las condiciones de WhatsApp. Los usamos
+          únicamente para responderte la cotización y coordinar el servicio.
+        </p>
+
+        <h2>Datos que podés compartirnos</h2>
+        <ul>
+          <li>Nombre y teléfono, para poder responderte.</li>
+          <li>Direcciones de origen y destino del traslado.</li>
+          <li>Fecha, horario y descripción de la carga.</li>
+          <li>
+            RUT, solo si nos pedís boleta o factura. Es un campo opcional.
+          </li>
+          <li>
+            Una ubicación marcada en el mapa, solo si elegís usar esa función.
+          </li>
+        </ul>
+
+        <h2>Cookies y medición</h2>
+        {
+          hayMedicion ? (
+            <>
+              <p>
+                Usamos herramientas de medición para entender cómo se usa el
+                sitio y para medir el resultado de nuestra publicidad. Estas
+                herramientas pueden instalar cookies en tu navegador.
+              </p>
+              <p>
+                Podés bloquear o borrar las cookies desde la configuración de tu
+                navegador. El sitio funciona igual sin ellas.
+              </p>
+            </>
+          ) : (
+            <p>
+              Actualmente este sitio <strong>no utiliza cookies de seguimiento
+              ni herramientas de analítica</strong>. No cargamos scripts de
+              terceros. Si esto cambiara, actualizaremos esta página.
+            </p>
+          )
+        }
+
+        <h2>Servicios de terceros</h2>
+        <p>
+          El sitio usa los siguientes servicios externos, cada uno con su propia
+          política de privacidad:
+        </p>
+        <ul>
+          <li>
+            <strong>Netlify</strong>, que aloja el sitio y registra datos
+            técnicos básicos de las visitas, como dirección IP y tipo de
+            navegador.
+          </li>
+          <li>
+            <strong>WhatsApp (Meta)</strong>, cuando enviás una cotización o nos
+            escribís desde un botón del sitio.
+          </li>
+          <li>
+            <strong>OpenStreetMap</strong>, únicamente si abrís el mapa
+            opcional del formulario. En ese caso tu navegador solicita las
+            imágenes del mapa a sus servidores.
+          </li>
+        </ul>
+
+        <h2>Tus derechos</h2>
+        <p>
+          Podés pedirnos en cualquier momento que te informemos qué datos tuyos
+          tenemos, que los corrijamos o que los eliminemos. Para hacerlo,
+          escribinos al {negocio.telefono}. Como no guardamos datos en el sitio,
+          en la práctica esto se limita a la conversación de WhatsApp que hayas
+          tenido con nosotros.
+        </p>
+
+        <h2>Cambios en esta política</h2>
+        <p>
+          Si cambiamos la forma en que tratamos los datos, actualizaremos esta
+          página y la fecha del encabezado.
+        </p>
+
+        <h2>Contacto</h2>
+        <p>
+          Cualquier consulta sobre privacidad podés hacerla al
+          {' '}<a href={`tel:${negocio.telefonoE164}`}>{negocio.telefono}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  h1 {
+    color: var(--azul-900);
+    margin-bottom: var(--e-3);
+  }
+
+  .actualizado {
+    font-size: var(--txt-sm);
+    color: var(--texto-tenue);
+    margin-bottom: var(--e-10);
+    padding-bottom: var(--e-5);
+    border-bottom: 1px solid var(--borde);
+  }
+
+  .prosa h2 {
+    font-size: var(--txt-h3);
+    color: var(--azul-900);
+  }
+
+  .prosa p,
+  .prosa li {
+    color: var(--texto-suave);
+    line-height: 1.75;
+  }
+</style>

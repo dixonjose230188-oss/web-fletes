@@ -1,0 +1,417 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Migas from '../../components/Migas.astro';
+import Icono from '../../components/Icono.astro';
+import FormularioCotizacion from '../../components/FormularioCotizacion.astro';
+import ListaFaq from '../../components/ListaFaq.astro';
+import CtaFinal from '../../components/CtaFinal.astro';
+
+import { comunas, buscarComuna } from '../../data/comunas.js';
+import { servicios } from '../../data/servicios.js';
+import { faq } from '../../data/faq.js';
+import { foto } from '../../lib/imagenes.js';
+import { negocio, whatsappUrl } from '../../data/negocio.js';
+import { migasSchema, negocioLocal, faqSchema } from '../../lib/jsonld.js';
+
+export function getStaticPaths() {
+  return comunas.map((comuna) => ({
+    params: { comuna: comuna.slug },
+    props: { comuna },
+  }));
+}
+
+const { comuna } = Astro.props;
+
+// Algunas comunas listan vecinas que todavía no tienen página propia.
+// Se filtran para no generar enlaces rotos.
+const vecinasConPagina = comuna.vecinas
+  .map((slug: string) => buscarComuna(slug))
+  .filter(Boolean);
+
+const imagen = foto('mudanza-casa-santiago.jpg');
+const faqComuna = faq.slice(0, 4);
+
+const migas = [
+  { texto: 'Inicio', href: '/' },
+  { texto: 'Cobertura', href: '/cobertura' },
+  { texto: comuna.nombre, href: `/fletes-en/${comuna.slug}` },
+];
+
+const mensajeWa = `Hola, necesito un flete en ${comuna.nombre}.`;
+---
+
+<Base
+  titulo={`Fletes y mudanzas en ${comuna.nombre}`}
+  descripcion={`Fletes, mudanzas y transporte de carga en ${comuna.nombre}, ${negocio.region}. Camión propio, ayudante opcional y cotización sin costo por WhatsApp.`}
+  jsonLd={[migasSchema(migas), negocioLocal({ comunas: [comuna] }), faqSchema(faqComuna)]}
+>
+  <Migas items={migas} />
+
+  <!-- Cabecera -->
+  <section class="cabecera-comuna">
+    <div class="contenedor cabecera-grilla">
+      <div>
+        <span class="antetitulo">
+          <Icono nombre="mapa" />
+          Zona {comuna.zona} · {negocio.region}
+        </span>
+
+        <h1>Fletes y mudanzas en {comuna.nombre}</h1>
+
+        <p class="entradilla">{comuna.descripcion}</p>
+
+        <div class="grupo-botones">
+          <a
+            href={whatsappUrl(mensajeWa)}
+            class="boton boton-wa"
+            target="_blank"
+            rel="noopener"
+            data-origen={`comuna-${comuna.slug}`}
+          >
+            <Icono nombre="whatsapp" />
+            Cotizar en {comuna.nombre}
+          </a>
+          <a href="#cotizar" class="boton boton-secundario">Completar formulario</a>
+        </div>
+      </div>
+
+      <figure class="cabecera-figura">
+        <Image
+          src={imagen}
+          alt={`Camión de ${negocio.nombre} cargado durante una mudanza en Santiago`}
+          widths={[520, 760, 1000]}
+          sizes="(min-width: 1024px) 480px, 92vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <!-- Sectores y acceso -->
+  <section class="seccion seccion-alt">
+    <div class="contenedor grilla grilla-2 bloques">
+      <div class="bloque">
+        <h2>Sectores donde trabajamos</h2>
+        <p class="bloque-texto">
+          Llegamos a toda la comuna de {comuna.nombre}. Estos son los sectores
+          donde más servicios hacemos:
+        </p>
+        <ul class="lista-check">
+          {
+            comuna.sectores.map((sector: string) => (
+              <li>
+                <Icono nombre="check" />
+                <span>{sector}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="bloque">
+        <h2>Qué tener en cuenta acá</h2>
+        <p class="bloque-texto">{comuna.acceso}</p>
+        <p class="bloque-nota">
+          <Icono nombre="reloj" />
+          <span>
+            Contanos el tipo de acceso al cotizar. Es lo que más influye en el
+            tiempo de carga y, por lo tanto, en el precio final.
+          </span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios en esta comuna -->
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="encabezado-seccion">
+        <h2>Servicios disponibles en {comuna.nombre}</h2>
+        <p>Todos nuestros servicios están disponibles en esta comuna.</p>
+      </div>
+
+      <ul class="lista-servicios">
+        {
+          servicios.map((s) => (
+            <li>
+              <a href={`/servicios/${s.slug}`}>
+                <span class="serv-icono" aria-hidden="true">
+                  <Icono nombre={s.icono} />
+                </span>
+                <span>
+                  <strong>{s.tituloCorto} en {comuna.nombre}</strong>
+                  <small>{s.resumen}</small>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Formulario precargado con la comuna -->
+  <FormularioCotizacion
+    comunaPorDefecto={comuna.nombre}
+    titulo={`Cotizá tu flete en ${comuna.nombre}`}
+    bajada="Completá los datos y te llega el mensaje armado a WhatsApp. Cotizar no tiene costo."
+  />
+
+  <!-- Comunas vecinas -->
+  {
+    vecinasConPagina.length > 0 && (
+      <section class="seccion seccion-alt">
+        <div class="contenedor-angosto">
+          <h2>Comunas vecinas</h2>
+          <p class="bloque-texto">
+            ¿Tu traslado cruza de comuna? También trabajamos en:
+          </p>
+          <ul class="chips-comunas">
+            {vecinasConPagina.map((v: any) => (
+              <li>
+                <a href={`/fletes-en/${v.slug}`}>Fletes en {v.nombre}</a>
+              </li>
+            ))}
+            <li>
+              <a href="/cobertura" class="chip-todas">
+                Ver toda la cobertura
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- FAQ -->
+  <section class="seccion">
+    <div class="contenedor-angosto">
+      <ListaFaq preguntas={faqComuna} titulo="Preguntas frecuentes" />
+    </div>
+  </section>
+
+  <CtaFinal
+    titulo={`¿Necesitás un flete en ${comuna.nombre}?`}
+    mensaje={mensajeWa}
+  />
+</Base>
+
+<style>
+  .cabecera-comuna {
+    padding-block: clamp(2rem, 1.5rem + 3vw, 4rem);
+    background: linear-gradient(180deg, var(--azul-50), var(--blanco));
+  }
+
+  .cabecera-grilla {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 1.5rem + 3vw, 3.5rem);
+    align-items: center;
+  }
+
+  .antetitulo :global(.icono) {
+    width: 16px;
+    height: 16px;
+  }
+
+  .cabecera-grilla h1 {
+    color: var(--azul-900);
+    margin-bottom: var(--e-5);
+  }
+
+  .entradilla {
+    font-size: var(--txt-lg);
+    line-height: 1.7;
+    color: var(--texto-suave);
+    max-width: 56ch;
+    margin-bottom: var(--e-8);
+  }
+
+  .grupo-botones .boton :global(.icono) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .cabecera-figura {
+    margin: 0;
+  }
+
+  .cabecera-figura :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--radio-xl);
+    box-shadow: var(--sombra-lg);
+  }
+
+  /* --- Bloques --- */
+  .bloques .bloque {
+    padding: var(--e-6);
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-lg);
+  }
+
+  .bloque h2 {
+    font-size: var(--txt-h3);
+    color: var(--azul-900);
+    margin-bottom: var(--e-4);
+  }
+
+  .bloque-texto {
+    color: var(--texto-suave);
+    line-height: 1.7;
+    margin-bottom: var(--e-5);
+  }
+
+  .bloque-nota {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--e-3);
+    padding: var(--e-4);
+    background: var(--azul-50);
+    border-radius: var(--radio);
+    font-size: var(--txt-sm);
+    line-height: 1.6;
+    color: var(--azul-800);
+  }
+
+  .bloque-nota :global(.icono) {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--azul-600);
+  }
+
+  .lista-check {
+    display: flex;
+    flex-direction: column;
+    gap: var(--e-3);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .lista-check li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--e-3);
+    line-height: 1.6;
+  }
+
+  .lista-check :global(.icono) {
+    width: 19px;
+    height: 19px;
+    margin-top: 3px;
+    flex-shrink: 0;
+    color: var(--verde-wa-oscuro);
+    stroke-width: 2.6;
+  }
+
+  /* --- Servicios --- */
+  .lista-servicios {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--e-4);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .lista-servicios a {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--e-4);
+    height: 100%;
+    padding: var(--e-5);
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-lg);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color var(--transicion), transform var(--transicion),
+      box-shadow var(--transicion);
+  }
+
+  .lista-servicios a:hover {
+    border-color: var(--azul-500);
+    transform: translateY(-2px);
+    box-shadow: var(--sombra);
+  }
+
+  .serv-icono {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radio);
+    background: var(--azul-50);
+    color: var(--azul-600);
+  }
+
+  .lista-servicios strong {
+    display: block;
+    font-size: var(--txt-base);
+    color: var(--azul-900);
+    margin-bottom: 2px;
+  }
+
+  .lista-servicios small {
+    display: block;
+    font-size: var(--txt-sm);
+    line-height: 1.55;
+    color: var(--texto-suave);
+  }
+
+  /* --- Chips --- */
+  .chips-comunas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-2);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .chips-comunas a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: var(--e-2) var(--e-5);
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-full);
+    font-size: var(--txt-sm);
+    font-weight: var(--peso-semi);
+    color: var(--azul-700);
+    text-decoration: none;
+    transition: border-color var(--transicion);
+  }
+
+  .chips-comunas a:hover {
+    border-color: var(--azul-500);
+  }
+
+  .chip-todas {
+    background: var(--azul-600) !important;
+    color: var(--blanco) !important;
+    border-color: var(--azul-600) !important;
+  }
+
+  @media (min-width: 640px) {
+    .lista-servicios {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .cabecera-grilla {
+      grid-template-columns: 1fr minmax(380px, 480px);
+      gap: var(--e-16);
+    }
+  }
+</style>

@@ -1,3 +1,11 @@
+# Dependencias y compilados
+node_modules
+dist
+dist-ssr
+
+# Caché generada por Astro
+.astro/
+
 # Logs
 logs
 *.log
@@ -7,12 +15,21 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# ---------------------------------------------------------------------
+# SECRETOS — nunca deben llegar al repositorio.
+# Este repo se publica en GitHub: cualquier credencial commiteada queda
+# expuesta, y borrarla después no la quita del historial.
+# ---------------------------------------------------------------------
+.env
+.env.*
+!.env.example
 *.local
+*token*
+*secret*
+*credential*
+revisar*.txt
 
-# Editor directories and files
+# Editor
 .vscode/*
 !.vscode/extensions.json
 .idea

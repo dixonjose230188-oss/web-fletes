@@ -1,0 +1,218 @@
+---
+import Marca from './Marca.astro';
+import { negocio, whatsappUrl } from '../data/negocio.js';
+import { servicios } from '../data/servicios.js';
+import { comunas } from '../data/comunas.js';
+
+const ano = new Date().getFullYear();
+// Solo las principales en el pie: un pie con 12 comunas se ve a spam.
+const comunasDestacadas = comunas.slice(0, 8);
+---
+
+<footer class="pie">
+  <div class="contenedor pie-grilla">
+    <div class="pie-col pie-col-marca">
+      <Marca variante="claro" />
+      <p class="pie-descripcion">
+        Fletes, mudanzas y transporte de carga en Santiago y toda la Región
+        Metropolitana. Cotización sin costo por WhatsApp.
+      </p>
+      <a
+        href={whatsappUrl('Hola, quisiera cotizar un flete.')}
+        class="boton boton-wa"
+        target="_blank"
+        rel="noopener"
+        data-origen="pie"
+      >
+        Cotizar por WhatsApp
+      </a>
+    </div>
+
+    <div class="pie-col">
+      <h3>Servicios</h3>
+      <ul>
+        {
+          servicios.map((s) => (
+            <li>
+              <a href={`/servicios/${s.slug}`}>{s.titulo}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="pie-col">
+      <h3>Cobertura</h3>
+      <ul>
+        {
+          comunasDestacadas.map((c) => (
+            <li>
+              <a href={`/fletes-en/${c.slug}`}>Fletes en {c.nombre}</a>
+            </li>
+          ))
+        }
+        <li><a href="/cobertura">Ver todas las comunas</a></li>
+      </ul>
+    </div>
+
+    <div class="pie-col">
+      <h3>Contacto</h3>
+      <ul class="pie-contacto">
+        <li>
+          <a href={`tel:${negocio.telefonoE164}`} data-origen="pie">
+            {negocio.telefono}
+          </a>
+        </li>
+        <li>
+          <a href={negocio.instagram} target="_blank" rel="noopener">
+            {negocio.instagramUsuario}
+          </a>
+        </li>
+        <li class="pie-dato">{negocio.ciudad}, {negocio.region}</li>
+        <li class="pie-dato">{negocio.horario.texto}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="contenedor pie-legal">
+    <p>© {ano} {negocio.nombre}. Todos los derechos reservados.</p>
+    <nav aria-label="Enlaces legales">
+      <a href="/privacidad">Política de privacidad</a>
+      <a href="/preguntas-frecuentes">Preguntas frecuentes</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .pie {
+    background: var(--azul-900);
+    color: var(--azul-100);
+    padding-top: var(--e-16);
+  }
+
+  .pie-grilla {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--e-10);
+    padding-bottom: var(--e-12);
+  }
+
+  .pie-col-marca {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--e-4);
+  }
+
+  .pie-descripcion {
+    font-size: var(--txt-sm);
+    line-height: 1.7;
+    color: rgb(228 237 253 / 0.75);
+    max-width: 42ch;
+  }
+
+  .pie-col h3 {
+    font-size: var(--txt-sm);
+    font-weight: var(--peso-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blanco);
+    margin-bottom: var(--e-4);
+  }
+
+  .pie-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--e-1);
+  }
+
+  .pie-col a {
+    /* inline-block + padding para llegar a un área táctil cómoda:
+       como texto suelto quedaban en 19px de alto. */
+    display: inline-block;
+    padding-block: var(--e-2);
+    min-height: 40px;
+    color: rgb(228 237 253 / 0.8);
+    font-size: var(--txt-sm);
+    text-decoration: none;
+    transition: color var(--transicion);
+  }
+
+  .pie-col a:hover {
+    color: var(--blanco);
+    text-decoration: underline;
+  }
+
+  .pie-contacto a {
+    font-weight: var(--peso-semi);
+    color: var(--blanco);
+  }
+
+  .pie-dato {
+    padding-block: var(--e-2);
+    font-size: var(--txt-sm);
+    color: rgb(228 237 253 / 0.65);
+  }
+
+  .pie-legal a {
+    display: inline-block;
+    padding-block: var(--e-2);
+  }
+
+  .pie-legal {
+    display: flex;
+    flex-direction: column;
+    gap: var(--e-3);
+    align-items: center;
+    text-align: center;
+    padding-block: var(--e-6);
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+    font-size: var(--txt-xs);
+    color: rgb(228 237 253 / 0.6);
+  }
+
+  .pie-legal nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--e-5);
+  }
+
+  .pie-legal a {
+    color: rgb(228 237 253 / 0.7);
+    text-decoration: none;
+  }
+
+  .pie-legal a:hover {
+    color: var(--blanco);
+    text-decoration: underline;
+  }
+
+  @media (min-width: 640px) {
+    .pie-grilla {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--e-8) var(--e-6);
+    }
+    .pie-col-marca {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .pie-grilla {
+      grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      gap: var(--e-10);
+    }
+    .pie-col-marca {
+      grid-column: auto;
+    }
+    .pie-legal {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+    }
+  }
+</style>

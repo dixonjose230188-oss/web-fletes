@@ -1,0 +1,245 @@
+---
+import { Image } from 'astro:assets';
+import Icono from './Icono.astro';
+import { foto } from '../lib/imagenes.js';
+import { negocio, whatsappUrl } from '../data/negocio.js';
+
+const imagen = foto('mudanza-casa-santiago.jpg');
+---
+
+<section class="hero">
+  <div class="contenedor hero-grilla">
+    <div class="hero-texto">
+      <p class="hero-ubicacion">
+        <Icono nombre="mapa" />
+        Santiago y toda la Región Metropolitana
+      </p>
+
+      <h1>Fletes y mudanzas <span>sin vueltas</span></h1>
+
+      <p class="hero-bajada">
+        Movemos tu casa, tu oficina o la carga de tu empresa con camión propio,
+        carga asegurada y un valor cerrado antes de partir. Cotizar es gratis y
+        toma un minuto.
+      </p>
+
+      <div class="grupo-botones hero-acciones">
+        <a
+          href={whatsappUrl('Hola, quisiera cotizar un flete.')}
+          class="boton boton-wa"
+          target="_blank"
+          rel="noopener"
+          data-origen="hero"
+        >
+          <Icono nombre="whatsapp" />
+          Cotizar por WhatsApp
+        </a>
+        <a href="#cotizar" class="boton boton-secundario">
+          Completar formulario
+        </a>
+      </div>
+
+      <ul class="hero-puntos">
+        <li>
+          <Icono nombre="check" />
+          Lunes a domingo, 8:00 a 21:00
+        </li>
+        <li>
+          <Icono nombre="check" />
+          Con o sin ayudante, vos elegís
+        </li>
+        <li>
+          <Icono nombre="check" />
+          Boleta o factura si la necesitás
+        </li>
+      </ul>
+    </div>
+
+    <div class="hero-media">
+      <Image
+        src={imagen}
+        alt="Camión de Fletes Matcris cargado con muebles, colchones y un refrigerador durante una mudanza en Santiago"
+        widths={[560, 760, 1000, 1280]}
+        sizes="(min-width: 1100px) 540px, (min-width: 640px) 60vw, 92vw"
+        loading="eager"
+        fetchpriority="high"
+        decoding="sync"
+        class="hero-imagen"
+      />
+
+      <div class="hero-chip">
+        <Icono nombre="camion" />
+        <span>
+          <strong>Camión 1,5 t</strong>
+          <small>Mudanzas, carga y materiales</small>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-block: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+    background:
+      radial-gradient(
+        ellipse 80% 60% at 15% 0%,
+        var(--azul-50) 0%,
+        transparent 60%
+      ),
+      linear-gradient(180deg, var(--blanco), var(--fondo-alt));
+    overflow: hidden;
+  }
+
+  .hero-grilla {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 1.5rem + 3vw, 3.5rem);
+    align-items: center;
+  }
+
+  /* --- Texto --- */
+  .hero-ubicacion {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--e-2);
+    padding: var(--e-2) var(--e-4);
+    margin-bottom: var(--e-5);
+    background: var(--blanco);
+    border: 1px solid var(--azul-100);
+    border-radius: var(--radio-full);
+    font-size: var(--txt-sm);
+    font-weight: var(--peso-semi);
+    color: var(--azul-700);
+    box-shadow: var(--sombra-sm);
+  }
+
+  .hero-ubicacion :global(.icono) {
+    width: 17px;
+    height: 17px;
+  }
+
+  .hero h1 {
+    color: var(--azul-900);
+    margin-bottom: var(--e-5);
+  }
+
+  .hero h1 span {
+    color: var(--azul-600);
+  }
+
+  .hero-bajada {
+    font-size: var(--txt-lg);
+    line-height: 1.65;
+    color: var(--texto-suave);
+    max-width: 52ch;
+    margin-bottom: var(--e-8);
+  }
+
+  .hero-acciones {
+    margin-bottom: var(--e-8);
+  }
+
+  .hero-acciones .boton :global(.icono) {
+    width: 21px;
+    height: 21px;
+  }
+
+  .hero-puntos {
+    display: flex;
+    flex-direction: column;
+    gap: var(--e-3);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .hero-puntos li {
+    display: flex;
+    align-items: center;
+    gap: var(--e-3);
+    font-size: var(--txt-sm);
+    font-weight: var(--peso-medio);
+    color: var(--texto-suave);
+  }
+
+  .hero-puntos :global(.icono) {
+    width: 18px;
+    height: 18px;
+    color: var(--verde-wa-oscuro);
+    stroke-width: 2.6;
+  }
+
+  /* --- Imagen --- */
+  .hero-media {
+    position: relative;
+  }
+
+  .hero-media :global(.hero-imagen) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--radio-xl);
+    box-shadow: var(--sombra-lg);
+  }
+
+  .hero-chip {
+    display: none;
+    position: absolute;
+    left: calc(var(--e-5) * -1);
+    bottom: var(--e-6);
+    align-items: center;
+    gap: var(--e-3);
+    padding: var(--e-3) var(--e-5);
+    background: var(--blanco);
+    border-radius: var(--radio-lg);
+    box-shadow: var(--sombra-lg);
+  }
+
+  .hero-chip :global(.icono) {
+    width: 26px;
+    height: 26px;
+    color: var(--azul-600);
+  }
+
+  .hero-chip span {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+  }
+
+  .hero-chip strong {
+    font-size: var(--txt-base);
+    font-weight: var(--peso-bold);
+    color: var(--azul-900);
+  }
+
+  .hero-chip small {
+    font-size: var(--txt-xs);
+    color: var(--texto-tenue);
+  }
+
+  /* --- Breakpoints --- */
+  @media (min-width: 640px) {
+    .hero-puntos {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: var(--e-3) var(--e-6);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-grilla {
+      /* La foto del hero es de 1280px de ancho: limitar la columna a
+         ~540px la mantiene nítida en pantallas grandes. */
+      grid-template-columns: 1fr minmax(420px, 540px);
+      gap: var(--e-16);
+    }
+
+    .hero-chip {
+      display: flex;
+    }
+  }
+</style>

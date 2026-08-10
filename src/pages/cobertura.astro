@@ -1,0 +1,214 @@
+---
+import Base from '../layouts/Base.astro';
+import Migas from '../components/Migas.astro';
+import Icono from '../components/Icono.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+
+import { comunas } from '../data/comunas.js';
+import { negocio } from '../data/negocio.js';
+import { migasSchema, negocioLocal } from '../lib/jsonld.js';
+
+const migas = [
+  { texto: 'Inicio', href: '/' },
+  { texto: 'Cobertura', href: '/cobertura' },
+];
+
+// Agrupadas por zona para que la lista se lea, en vez de ser un muro.
+const porZona = comunas.reduce<Record<string, typeof comunas>>((acc, c) => {
+  (acc[c.zona] ??= []).push(c);
+  return acc;
+}, {});
+
+const zonas = Object.keys(porZona).sort();
+---
+
+<Base
+  titulo="Cobertura en la Región Metropolitana"
+  descripcion="Fletes y mudanzas en todo el Gran Santiago. Revisá las comunas donde trabajamos y las particularidades de acceso de cada zona."
+  jsonLd={[migasSchema(migas), negocioLocal({ comunas })]}
+>
+  <Migas items={migas} />
+
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="encabezado-seccion">
+        <span class="antetitulo">
+          <Icono nombre="mapa" />
+          Dónde llegamos
+        </span>
+        <h1>Cobertura en {negocio.region}</h1>
+        <p>
+          Trabajamos en todo el Gran Santiago. Abajo están las comunas con
+          página propia, donde detallamos los sectores y los accesos típicos.
+          Si tu comuna no aparece en la lista, escribinos igual: la cobertura
+          es toda la región.
+        </p>
+      </div>
+
+      {
+        zonas.map((zona) => (
+          <div class="zona">
+            <h2>Zona {zona}</h2>
+            <ul class="grilla-comunas">
+              {porZona[zona].map((c) => (
+                <li>
+                  <a href={`/fletes-en/${c.slug}`}>
+                    <strong>{c.nombre}</strong>
+                    <small>{c.sectores.slice(0, 3).join(' · ')}</small>
+                    <span class="flecha" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path
+                          d="M5 12h14m-6-6 6 6-6 6"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          fill="none"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+
+      <aside class="aviso">
+        <Icono nombre="camion" />
+        <div>
+          <strong>¿Traslados fuera de la Región Metropolitana?</strong>
+          <p>
+            Se cotizan aparte según el destino. Escribinos con el origen, el
+            destino y qué hay que mover, y te pasamos un valor.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <CtaFinal
+    titulo="¿Tu comuna no está en la lista?"
+    texto="No importa: cubrimos toda la Región Metropolitana. Escribinos y coordinamos."
+    mensaje="Hola, ¿llegan a mi comuna? Necesito cotizar un flete."
+  />
+</Base>
+
+<style>
+  .zona {
+    margin-bottom: var(--e-12);
+  }
+
+  .zona h2 {
+    font-size: var(--txt-h3);
+    color: var(--azul-900);
+    padding-bottom: var(--e-3);
+    margin-bottom: var(--e-5);
+    border-bottom: 2px solid var(--azul-100);
+  }
+
+  .grilla-comunas {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--e-3);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .grilla-comunas a {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    gap: 2px var(--e-4);
+    height: 100%;
+    padding: var(--e-4) var(--e-5);
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color var(--transicion), transform var(--transicion),
+      box-shadow var(--transicion);
+  }
+
+  .grilla-comunas a:hover {
+    border-color: var(--azul-500);
+    transform: translateY(-2px);
+    box-shadow: var(--sombra);
+  }
+
+  .grilla-comunas strong {
+    font-size: var(--txt-base);
+    font-weight: var(--peso-bold);
+    color: var(--azul-900);
+  }
+
+  .grilla-comunas small {
+    grid-column: 1;
+    font-size: var(--txt-xs);
+    color: var(--texto-tenue);
+    line-height: 1.5;
+  }
+
+  .flecha {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radio-full);
+    background: var(--azul-50);
+    color: var(--azul-600);
+  }
+
+  .flecha svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .aviso {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--e-4);
+    padding: var(--e-6);
+    background: var(--azul-50);
+    border: 1px solid var(--azul-100);
+    border-radius: var(--radio-lg);
+  }
+
+  .aviso :global(.icono) {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    color: var(--azul-600);
+  }
+
+  .aviso strong {
+    display: block;
+    font-size: var(--txt-lg);
+    color: var(--azul-900);
+    margin-bottom: var(--e-2);
+  }
+
+  .aviso p {
+    color: var(--texto-suave);
+    line-height: 1.65;
+    max-width: 60ch;
+  }
+
+  @media (min-width: 640px) {
+    .grilla-comunas {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .grilla-comunas {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

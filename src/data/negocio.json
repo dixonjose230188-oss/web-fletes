@@ -1,0 +1,29 @@
+{
+  "nombre": "Fletes Matcris",
+  "telefono": "+56 9 5330 3129",
+  "telefonoE164": "+56953303129",
+  "whatsapp": "56953303129",
+  "email": "contacto@fletesmatcris.cl",
+  "instagram": "https://instagram.com/fletesmatcris",
+  "instagramUsuario": "@fletesmatcris",
+  "sitio": "https://fletesmatcris.cl",
+  "ciudad": "Santiago",
+  "region": "Región Metropolitana",
+  "regionCodigo": "CL-RM",
+  "pais": "Chile",
+  "paisCodigo": "CL",
+  "geo": {
+    "lat": -33.4489,
+    "lng": -70.6693
+  },
+  "horario": {
+    "texto": "Lunes a domingo, 8:00 a 21:00",
+    "detalle": "Fuera de horario, previa coordinación por WhatsApp.",
+    "abre": "08:00",
+    "cierra": "21:00"
+  },
+  "pendientes": {
+    "direccion": null,
+    "rut": null
+  }
+}
