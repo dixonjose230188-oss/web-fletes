@@ -1,0 +1,251 @@
+---
+import Base from '../layouts/Base.astro';
+import Migas from '../components/Migas.astro';
+import Icono from '../components/Icono.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+
+import { negocio, whatsappUrl } from '../data/negocio.js';
+import { migasSchema, negocioLocal } from '../lib/jsonld.js';
+
+const migas = [
+  { texto: 'Inicio', href: '/' },
+  { texto: 'Contacto', href: '/contacto' },
+];
+
+const canales = [
+  {
+    icono: 'whatsapp',
+    titulo: 'WhatsApp',
+    detalle: negocio.telefono,
+    nota: 'La vía más rápida. Podés mandar fotos de la carga.',
+    href: whatsappUrl('Hola, quisiera hacer una consulta.'),
+    externo: true,
+    destacado: true,
+  },
+  {
+    icono: 'telefono',
+    titulo: 'Teléfono',
+    detalle: negocio.telefono,
+    nota: 'Si preferís hablar directamente.',
+    href: `tel:${negocio.telefonoE164}`,
+    externo: false,
+    destacado: false,
+  },
+  {
+    icono: 'mapa',
+    titulo: 'Instagram',
+    detalle: negocio.instagramUsuario,
+    nota: 'Mirá trabajos que hemos hecho.',
+    href: negocio.instagram,
+    externo: true,
+    destacado: false,
+  },
+];
+---
+
+<Base
+  titulo="Contacto"
+  descripcion={`Contactá a ${negocio.nombre} por WhatsApp o teléfono. Atención de lunes a domingo en Santiago y la Región Metropolitana.`}
+  jsonLd={[migasSchema(migas), negocioLocal()]}
+>
+  <Migas items={migas} />
+
+  <section class="seccion">
+    <div class="contenedor-angosto">
+      <div class="encabezado-seccion centrado">
+        <span class="antetitulo">Hablemos</span>
+        <h1>Contacto</h1>
+        <p>
+          Escribinos con lo que necesitás mover y te respondemos con un valor.
+          Cotizar no tiene costo.
+        </p>
+      </div>
+
+      <ul class="canales">
+        {
+          canales.map((c) => (
+            <li>
+              <a
+                href={c.href}
+                class:list={['canal', c.destacado && 'canal-destacado']}
+                target={c.externo ? '_blank' : undefined}
+                rel={c.externo ? 'noopener' : undefined}
+                data-origen="pagina-contacto"
+              >
+                <span class="canal-icono" aria-hidden="true">
+                  <Icono nombre={c.icono} />
+                </span>
+                <span class="canal-texto">
+                  <strong>{c.titulo}</strong>
+                  <span class="canal-detalle">{c.detalle}</span>
+                  <small>{c.nota}</small>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="datos">
+        <div class="dato">
+          <Icono nombre="reloj" />
+          <div>
+            <strong>Horario de atención</strong>
+            <p>{negocio.horario.texto}</p>
+            <p class="dato-nota">{negocio.horario.detalle}</p>
+          </div>
+        </div>
+
+        <div class="dato">
+          <Icono nombre="mapa" />
+          <div>
+            <strong>Zona de cobertura</strong>
+            <p>{negocio.ciudad} y toda la {negocio.region}</p>
+            <p class="dato-nota">
+              <a href="/cobertura">Ver comunas donde trabajamos</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaFinal />
+</Base>
+
+<style>
+  .canales {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--e-4);
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--e-12);
+  }
+
+  .canal {
+    display: flex;
+    align-items: center;
+    gap: var(--e-5);
+    height: 100%;
+    padding: var(--e-5);
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-lg);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color var(--transicion), transform var(--transicion),
+      box-shadow var(--transicion);
+  }
+
+  .canal:hover {
+    border-color: var(--azul-500);
+    transform: translateY(-2px);
+    box-shadow: var(--sombra);
+  }
+
+  .canal-destacado {
+    border-color: var(--verde-wa);
+    background: #f2fdf6;
+  }
+
+  .canal-destacado:hover {
+    border-color: var(--verde-wa-oscuro);
+  }
+
+  .canal-icono {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radio);
+    background: var(--azul-50);
+    color: var(--azul-600);
+  }
+
+  .canal-destacado .canal-icono {
+    background: var(--verde-wa);
+    color: #04301a;
+  }
+
+  .canal-icono :global(.icono) {
+    width: 26px;
+    height: 26px;
+  }
+
+  .canal-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+
+  .canal-texto strong {
+    font-size: var(--txt-sm);
+    font-weight: var(--peso-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--texto-tenue);
+  }
+
+  .canal-detalle {
+    font-size: var(--txt-lg);
+    font-weight: var(--peso-bold);
+    color: var(--azul-900);
+  }
+
+  .canal-texto small {
+    font-size: var(--txt-xs);
+    color: var(--texto-tenue);
+    line-height: 1.5;
+  }
+
+  /* --- Datos --- */
+  .datos {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--e-6);
+    padding: var(--e-6);
+    background: var(--fondo-alt);
+    border-radius: var(--radio-lg);
+  }
+
+  .dato {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--e-4);
+  }
+
+  .dato :global(.icono) {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: var(--azul-600);
+  }
+
+  .dato strong {
+    display: block;
+    font-size: var(--txt-base);
+    color: var(--azul-900);
+    margin-bottom: var(--e-1);
+  }
+
+  .dato p {
+    font-size: var(--txt-sm);
+    color: var(--texto-suave);
+    line-height: 1.6;
+  }
+
+  .dato-nota {
+    color: var(--texto-tenue) !important;
+    font-size: var(--txt-xs) !important;
+    margin-top: 2px;
+  }
+
+  @media (min-width: 640px) {
+    .datos {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

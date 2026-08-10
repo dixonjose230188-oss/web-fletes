@@ -2,81 +2,218 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "public/assets"
-public_folder: "/assets"
+# Guarda los cambios en una rama y los publica al aprobar, en vez de
+# escribir directo sobre el sitio en vivo.
+publish_mode: editorial_workflow
+
+locale: es
+
+media_folder: "src/assets/fotos"
+public_folder: "/src/assets/fotos"
 
 collections:
-  - name: "content"
-    label: "Contenido del Sitio"
+  # -------------------------------------------------------------------
+  - name: "negocio"
+    label: "📞 Datos del negocio"
     files:
-      - file: "src/data/siteContent.json"
-        label: "Información General y Servicios"
-        name: "site_content"
+      - file: "src/data/negocio.json"
+        name: "negocio"
+        label: "Contacto, horario y ubicación"
+        description: >-
+          OJO: estos datos deben coincidir EXACTAMENTE con los de tu Google
+          Business Profile y tu Instagram. Si no coinciden, Google te
+          posiciona peor en el mapa.
         fields:
-          - label: "🎨 Personalización Visual (Colores)"
-            name: "theme"
-            widget: "object"
-            collapsed: true
-            fields:
-              - {label: "Color Principal (Azul)", name: "primary", widget: "color"}
-              - {label: "Color Acento (Naranja)", name: "accent", widget: "color"}
-              - {label: "Color Acento Suave (Verde)", name: "accentSoft", widget: "color"}
-              - {label: "Fondo Claro", name: "bgLight", widget: "color"}
-              - {label: "Color Texto", name: "text", widget: "color"}
+          - { label: "Nombre del negocio", name: "nombre", widget: "string" }
+          - {
+              label: "Teléfono (como se muestra)",
+              name: "telefono",
+              widget: "string",
+              hint: "Ej: +56 9 5330 3129",
+            }
+          - {
+              label: "Teléfono para llamar",
+              name: "telefonoE164",
+              widget: "string",
+              hint: "Sin espacios ni guiones. Ej: +56953303129",
+            }
+          - {
+              label: "Número de WhatsApp",
+              name: "whatsapp",
+              widget: "string",
+              hint: "Sin el + ni espacios. Ej: 56953303129",
+            }
+          - { label: "Correo electrónico", name: "email", widget: "string" }
+          - { label: "Enlace a Instagram", name: "instagram", widget: "string" }
+          - {
+              label: "Usuario de Instagram",
+              name: "instagramUsuario",
+              widget: "string",
+              hint: "Ej: @fletesmatcris",
+            }
+          - {
+              label: "Dirección del sitio",
+              name: "sitio",
+              widget: "hidden",
+            }
+          - { label: "Ciudad", name: "ciudad", widget: "string" }
+          - { label: "Región", name: "region", widget: "string" }
+          - { label: "Código de región", name: "regionCodigo", widget: "hidden" }
+          - { label: "País", name: "pais", widget: "hidden" }
+          - { label: "Código de país", name: "paisCodigo", widget: "hidden" }
 
-          - label: "📞 Información de Contacto y Logo"
-            name: "general"
+          - label: "Ubicación en el mapa"
+            name: "geo"
             widget: "object"
             collapsed: true
             fields:
-              - {label: "Logo del Sitio", name: "logo", widget: "image"}
-              - {label: "Número de Teléfono", name: "phone", widget: "string", hint: "Ej: +56 9 1234 5678"}
-              - {label: "Enlace WhatsApp", name: "whatsappLink", widget: "string", hint: "https://wa.me/..."}
-              - {label: "Enlace Instagram", name: "instagramLink", widget: "string", hint: "https://instagram.com/..."}
-              - {label: "Correo Electrónico", name: "email", widget: "string"}
+              - { label: "Latitud", name: "lat", widget: "number", value_type: "float" }
+              - { label: "Longitud", name: "lng", widget: "number", value_type: "float" }
 
-          - label: "🏠 Sección Principal (Hero)"
-            name: "hero"
+          - label: "Horario de atención"
+            name: "horario"
             widget: "object"
-            collapsed: true
             fields:
-              - {label: "Título Principal", name: "title", widget: "string"}
-              - {label: "Subtítulo", name: "subtitle", widget: "text"}
-              - {label: "Texto del Botón", name: "buttonText", widget: "string"}
-              - {label: "Imagen Principal (Camión)", name: "image", widget: "image"}
+              - {
+                  label: "Horario (texto visible)",
+                  name: "texto",
+                  widget: "string",
+                  hint: "Ej: Lunes a domingo, 8:00 a 21:00",
+                }
+              - { label: "Nota adicional", name: "detalle", widget: "string" }
+              - {
+                  label: "Hora de apertura",
+                  name: "abre",
+                  widget: "string",
+                  hint: "Formato 24h. Ej: 08:00",
+                }
+              - {
+                  label: "Hora de cierre",
+                  name: "cierra",
+                  widget: "string",
+                  hint: "Formato 24h. Ej: 21:00",
+                }
 
-          - label: "🚚 Sección de Servicios"
-            name: "services"
+          - label: "Datos pendientes"
+            name: "pendientes"
             widget: "object"
             collapsed: true
             fields:
-              - {label: "Título de la Sección", name: "title", widget: "string"}
-              - {label: "Bajada / Subtítulo", name: "subtitle", widget: "text"}
-              - {label: "Título Sección Flota", name: "fleetTitle", widget: "string"}
-              - {label: "Imagen de la Flota", name: "fleetImage", widget: "image"}
-              - label: "Lista de Servicios"
-                name: "items"
-                widget: "list"
-                collapsed: false
-                summary: "{{fields.title}}"
-                fields:
-                  - {label: "ID Interno (No tocar)", name: "id", widget: "string", required: true}
-                  - {label: "Título del Servicio", name: "title", widget: "string"}
-                  - {label: "Descripción", name: "description", widget: "text"}
-                  - {label: "Imagen", name: "image", widget: "image"}
+              - {
+                  label: "Dirección comercial",
+                  name: "direccion",
+                  widget: "string",
+                  required: false,
+                  hint: "Necesaria para Google Business Profile. Dejar vacía si no hay local con atención de público.",
+                }
+              - {
+                  label: "RUT",
+                  name: "rut",
+                  widget: "string",
+                  required: false,
+                }
 
-          - label: "📝 Formulario de Cotización"
-            name: "quoteForm"
-            widget: "object"
+  # -------------------------------------------------------------------
+  - name: "servicios"
+    label: "🚚 Servicios"
+    files:
+      - file: "src/data/servicios.json"
+        name: "servicios"
+        label: "Lista de servicios"
+        description: >-
+          Cada servicio genera su propia página. NO cambies el campo
+          "Slug" de un servicio ya publicado: es la URL, y cambiarla
+          rompe los enlaces y lo que Google ya tiene indexado.
+        fields:
+          - label: "Servicios"
+            name: "servicios"
+            widget: "list"
             collapsed: true
+            summary: "{{fields.titulo}}"
             fields:
-              - {label: "Título del Formulario", name: "title", widget: "string"}
-              - {label: "Subtítulo", name: "subtitle", widget: "string"}
+              - {
+                  label: "Slug (URL) — no cambiar si ya está publicado",
+                  name: "slug",
+                  widget: "string",
+                  pattern: ["^[a-z0-9-]+$", "Solo minúsculas, números y guiones"],
+                }
+              - { label: "Título completo", name: "titulo", widget: "string" }
+              - {
+                  label: "Título corto",
+                  name: "tituloCorto",
+                  widget: "string",
+                  hint: "El que se ve en las tarjetas y el menú.",
+                }
+              - label: "Ícono"
+                name: "icono"
+                widget: "select"
+                options: ["camion", "casa", "caja", "escudo", "reloj", "mapa"]
+              - {
+                  label: "Foto",
+                  name: "foto",
+                  widget: "string",
+                  hint: "Nombre del archivo dentro de src/assets/fotos. Ej: mudanza-casa-santiago.jpg",
+                }
+              - {
+                  label: "Texto alternativo de la foto",
+                  name: "fotoAlt",
+                  widget: "string",
+                  hint: "Describí qué se ve. Lo lee Google y los lectores de pantalla.",
+                }
+              - {
+                  label: "Resumen (tarjetas)",
+                  name: "resumen",
+                  widget: "text",
+                  hint: "Una o dos líneas.",
+                }
+              - {
+                  label: "Título para Google",
+                  name: "metaTitulo",
+                  widget: "string",
+                  hint: "Máximo ~55 caracteres para que no se corte en el buscador.",
+                }
+              - {
+                  label: "Descripción para Google",
+                  name: "metaDescripcion",
+                  widget: "text",
+                  hint: "Entre 120 y 155 caracteres. Es el texto que aparece bajo el título en Google.",
+                }
+              - {
+                  label: "Introducción de la página",
+                  name: "intro",
+                  widget: "text",
+                }
+              - {
+                  label: "Qué incluye",
+                  name: "incluye",
+                  widget: "list",
+                  field: { label: "Punto", name: "punto", widget: "string" },
+                }
+              - {
+                  label: "Ideal para",
+                  name: "ideal",
+                  widget: "list",
+                  field: { label: "Punto", name: "punto", widget: "string" },
+                }
 
-          - label: "🦶 Pie de Página (Footer)"
-            name: "footer"
-            widget: "object"
+  # -------------------------------------------------------------------
+  - name: "faq"
+    label: "❓ Preguntas frecuentes"
+    files:
+      - file: "src/data/faq.json"
+        name: "faq"
+        label: "Preguntas y respuestas"
+        description: >-
+          Estas preguntas también se envían a Google como datos
+          estructurados y pueden aparecer desplegables en el resultado de
+          búsqueda. Las respuestas tienen que ser verdaderas: si prometen
+          algo que no se cumple, Google puede quitar el formato especial.
+        fields:
+          - label: "Preguntas"
+            name: "faq"
+            widget: "list"
             collapsed: true
+            summary: "{{fields.pregunta}}"
             fields:
-              - {label: "Texto Descriptivo", name: "text", widget: "text"}
-              - {label: "Copyright", name: "copyright", widget: "string"}
+              - { label: "Pregunta", name: "pregunta", widget: "string" }
+              - { label: "Respuesta", name: "respuesta", widget: "text" }

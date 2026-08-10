@@ -1,0 +1,140 @@
+---
+/**
+ * Layout base. Todo lo que aquí se renderiza queda en el HTML ESTÁTICO
+ * que sirve Netlify — que es justamente lo que el sitio anterior no tenía:
+ * los bots de Google, Bing, Facebook, Instagram y WhatsApp leen estas
+ * etiquetas sin ejecutar JavaScript.
+ */
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+
+import { negocio } from '../data/negocio.js';
+import { analitica } from '../data/analitica.js';
+import Analitica from '../components/Analitica.astro';
+import Cabecera from '../components/Cabecera.astro';
+import PieDePagina from '../components/PieDePagina.astro';
+import BarraAccionMovil from '../components/BarraAccionMovil.astro';
+
+export interface Props {
+  titulo: string;
+  descripcion: string;
+  /** Ruta de la imagen para redes. Debe existir en /public. */
+  imagen?: string;
+  /** Añade el sufijo con el nombre del negocio. Desactivar en la home. */
+  sufijoTitulo?: boolean;
+  noindex?: boolean;
+  /** Objetos JSON-LD a insertar en el <head>. */
+  jsonLd?: Record<string, unknown>[];
+}
+
+const {
+  titulo,
+  descripcion,
+  imagen = '/og-fletes-matcris.jpg',
+  sufijoTitulo = true,
+  noindex = false,
+  jsonLd = [],
+} = Astro.props;
+
+const tituloCompleto = sufijoTitulo ? `${titulo} | ${negocio.nombre}` : titulo;
+
+// Canonical absoluto y sin barra final, coherente con trailingSlash: 'never'.
+const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', Astro.site).href;
+const imagenAbsoluta = new URL(imagen, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="es-CL">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={canonical} />
+
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {
+      !noindex && (
+        <meta
+          name="robots"
+          content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+        />
+      )
+    }
+
+    <!-- Open Graph: esto es lo que lee el bot de Facebook, Instagram y
+         WhatsApp al compartir el link en un anuncio o un mensaje. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={negocio.nombre} />
+    <meta property="og:locale" content="es_CL" />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imagenAbsoluta} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`Camión de ${negocio.nombre} cargado`} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={tituloCompleto} />
+    <meta name="twitter:description" content={descripcion} />
+    <meta name="twitter:image" content={imagenAbsoluta} />
+
+    <!-- Señales geográficas para búsqueda local -->
+    <meta name="geo.region" content={negocio.regionCodigo} />
+    <meta name="geo.placename" content={negocio.ciudad} />
+
+    {
+      analitica.googleSiteVerification && (
+        <meta
+          name="google-site-verification"
+          content={analitica.googleSiteVerification}
+        />
+      )
+    }
+    {
+      analitica.bingSiteVerification && (
+        <meta name="msvalidate.01" content={analitica.bingSiteVerification} />
+      )
+    }
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#1550c4" />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {
+      jsonLd.map((bloque) => (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(bloque)}
+        />
+      ))
+    }
+
+    <Analitica />
+  </head>
+
+  <body>
+    {
+      analitica.gtmId && (
+        <noscript is:inline set:html={`<iframe src="https://www.googletagmanager.com/ns.html?id=${analitica.gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`} />
+      )
+    }
+
+    <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+    <Cabecera />
+
+    <main id="contenido">
+      <slot />
+    </main>
+
+    <PieDePagina />
+    <BarraAccionMovil />
+  </body>
+</html>

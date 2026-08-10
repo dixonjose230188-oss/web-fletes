@@ -1,0 +1,124 @@
+---
+import Icono from './Icono.astro';
+import { negocio, whatsappUrl } from '../data/negocio.js';
+
+interface Props {
+  titulo?: string;
+  texto?: string;
+  mensaje?: string;
+}
+
+const {
+  titulo = '¿Listo para mover tu carga?',
+  texto = 'Escribinos por WhatsApp con lo que necesitás trasladar y te respondemos con un valor cerrado. Cotizar no tiene costo.',
+  mensaje = 'Hola, quisiera cotizar un flete.',
+} = Astro.props;
+---
+
+<section class="cta-final">
+  <div class="contenedor">
+    <div class="cta-caja">
+      <div class="cta-texto">
+        <h2>{titulo}</h2>
+        <p>{texto}</p>
+      </div>
+
+      <div class="cta-acciones">
+        <a
+          href={whatsappUrl(mensaje)}
+          class="boton boton-wa"
+          target="_blank"
+          rel="noopener"
+          data-origen="cta-final"
+        >
+          <Icono nombre="whatsapp" />
+          Escribir por WhatsApp
+        </a>
+        <a
+          href={`tel:${negocio.telefonoE164}`}
+          class="boton boton-secundario"
+          data-origen="cta-final"
+        >
+          <Icono nombre="telefono" />
+          {negocio.telefono}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-final {
+    padding-block: var(--seccion-y);
+  }
+
+  .cta-caja {
+    display: flex;
+    flex-direction: column;
+    gap: var(--e-6);
+    padding: clamp(1.75rem, 1.25rem + 2.5vw, 3.5rem);
+    background: linear-gradient(
+      135deg,
+      var(--azul-700),
+      var(--azul-600) 55%,
+      var(--azul-500)
+    );
+    border-radius: var(--radio-xl);
+    box-shadow: var(--sombra-lg);
+  }
+
+  .cta-caja h2 {
+    color: var(--blanco);
+    margin-bottom: var(--e-3);
+  }
+
+  .cta-caja p {
+    color: rgb(228 237 253 / 0.92);
+    font-size: var(--txt-lg);
+    max-width: 52ch;
+  }
+
+  .cta-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-3);
+  }
+
+  .cta-acciones .boton :global(.icono) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .cta-acciones .boton-secundario {
+    color: var(--blanco);
+    border-color: rgb(255 255 255 / 0.45);
+    background: transparent;
+  }
+
+  .cta-acciones .boton-secundario:hover {
+    background: rgb(255 255 255 / 0.14);
+    border-color: var(--blanco);
+  }
+
+  @media (max-width: 479px) {
+    .cta-acciones .boton {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .cta-caja {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--e-10);
+    }
+    .cta-acciones {
+      flex-shrink: 0;
+      flex-direction: column;
+    }
+    .cta-acciones .boton {
+      width: 100%;
+    }
+  }
+</style>

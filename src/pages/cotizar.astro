@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import Migas from '../components/Migas.astro';
+import FormularioCotizacion from '../components/FormularioCotizacion.astro';
+import ListaFaq from '../components/ListaFaq.astro';
+
+import { faq } from '../data/faq.js';
+import { migasSchema, negocioLocal, faqSchema } from '../lib/jsonld.js';
+
+const migas = [
+  { texto: 'Inicio', href: '/' },
+  { texto: 'Cotizar', href: '/cotizar' },
+];
+
+const faqPrecio = faq.slice(0, 4);
+---
+
+<Base
+  titulo="Cotizar un flete"
+  descripcion="Cotizá tu flete o mudanza en Santiago sin costo. Completá el formulario y recibí el valor por WhatsApp."
+  jsonLd={[migasSchema(migas), negocioLocal(), faqSchema(faqPrecio)]}
+>
+  <Migas items={migas} />
+
+  <section class="intro-cotizar">
+    <div class="contenedor-angosto">
+      <span class="antetitulo">Sin costo y sin compromiso</span>
+      <h1>Cotizá tu flete</h1>
+      <p>
+        Completá el formulario con lo que necesitás mover. Al enviarlo se abre
+        WhatsApp con el mensaje ya escrito, así no tenés que explicar todo de
+        nuevo. Te respondemos con un valor cerrado.
+      </p>
+    </div>
+  </section>
+
+  <FormularioCotizacion titulo="Datos de tu traslado" />
+
+  <section class="seccion">
+    <div class="contenedor-angosto">
+      <ListaFaq preguntas={faqPrecio} titulo="Sobre precios y cotizaciones" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro-cotizar {
+    padding-block: clamp(2rem, 1.5rem + 3vw, 3.5rem);
+    background: linear-gradient(180deg, var(--azul-50), var(--blanco));
+    text-align: center;
+  }
+
+  .intro-cotizar h1 {
+    color: var(--azul-900);
+    margin-bottom: var(--e-4);
+  }
+
+  .intro-cotizar p {
+    font-size: var(--txt-lg);
+    line-height: 1.7;
+    color: var(--texto-suave);
+    max-width: 56ch;
+    margin-inline: auto;
+  }
+</style>

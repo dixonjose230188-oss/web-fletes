@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import Migas from '../../components/Migas.astro';
+import TarjetaServicio from '../../components/TarjetaServicio.astro';
+import CtaFinal from '../../components/CtaFinal.astro';
+
+import { servicios } from '../../data/servicios.js';
+import { migasSchema, negocioLocal } from '../../lib/jsonld.js';
+
+const migas = [
+  { texto: 'Inicio', href: '/' },
+  { texto: 'Servicios', href: '/servicios' },
+];
+---
+
+<Base
+  titulo="Servicios de fletes y mudanzas"
+  descripcion="Mudanzas, transporte de carga, retiro de materiales y embalaje en Santiago y la Región Metropolitana. Conocé cada servicio y cotizá sin costo."
+  jsonLd={[migasSchema(migas), negocioLocal()]}
+>
+  <Migas items={migas} />
+
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="encabezado-seccion">
+        <span class="antetitulo">Servicios</span>
+        <h1>Qué podemos mover por vos</h1>
+        <p>
+          Trabajamos con particulares y con empresas dentro de toda la Región
+          Metropolitana. Elegí el servicio que necesitás para ver qué incluye y
+          cómo se cotiza.
+        </p>
+      </div>
+
+      <div class="grilla grilla-2">
+        {
+          servicios.map((s, i) => (
+            <TarjetaServicio servicio={s} prioridad={i < 2} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaFinal
+    titulo="¿No sabés cuál necesitás?"
+    texto="Contanos qué tenés que mover y te decimos qué servicio te conviene y cuánto sale. Sin compromiso."
+    mensaje="Hola, tengo una carga y no sé qué servicio necesito. ¿Me orientan?"
+  />
+</Base>

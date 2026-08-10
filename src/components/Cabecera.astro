@@ -1,0 +1,367 @@
+---
+import Marca from './Marca.astro';
+import { negocio, whatsappUrl } from '../data/negocio.js';
+
+const rutaActual = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const enlaces = [
+  { texto: 'Inicio', href: '/' },
+  { texto: 'Servicios', href: '/servicios' },
+  { texto: 'Cobertura', href: '/cobertura' },
+  { texto: 'Preguntas', href: '/preguntas-frecuentes' },
+  { texto: 'Contacto', href: '/contacto' },
+];
+
+const esActivo = (href: string) =>
+  href === '/' ? rutaActual === '/' : rutaActual.startsWith(href);
+---
+
+<header class="cabecera" id="cabecera">
+  <div class="contenedor cabecera-fila">
+    <a href="/" class="cabecera-marca" aria-label={`${negocio.nombre} — ir al inicio`}>
+      <Marca />
+    </a>
+
+    <nav class="nav-escritorio" aria-label="Navegación principal">
+      <ul>
+        {
+          enlaces.map((e) => (
+            <li>
+              <a href={e.href} aria-current={esActivo(e.href) ? 'page' : undefined}>
+                {e.texto}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="cabecera-acciones">
+      <a
+        href={`tel:${negocio.telefonoE164}`}
+        class="enlace-telefono"
+        data-origen="cabecera"
+      >
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+          <path
+            d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.6a1 1 0 0 1-.25 1l-2.22 2.2Z"
+            fill="currentColor"></path>
+        </svg>
+        <span>{negocio.telefono}</span>
+      </a>
+
+      <a
+        href={whatsappUrl('Hola, quisiera cotizar un flete.')}
+        class="boton boton-wa boton-cotizar"
+        target="_blank"
+        rel="noopener"
+        data-origen="cabecera"
+      >
+        Cotizar
+      </a>
+
+      <button
+        type="button"
+        class="boton-menu"
+        id="boton-menu"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="menu-movil"
+      >
+        <span class="hamburguesa" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Menú móvil -->
+  <div class="menu-movil" id="menu-movil" hidden>
+    <nav aria-label="Navegación móvil">
+      <ul>
+        {
+          enlaces.map((e) => (
+            <li>
+              <a href={e.href} aria-current={esActivo(e.href) ? 'page' : undefined}>
+                {e.texto}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="menu-movil-pie">
+      <a
+        href={`tel:${negocio.telefonoE164}`}
+        class="boton boton-secundario boton-bloque"
+        data-origen="menu-movil"
+      >
+        Llamar {negocio.telefono}
+      </a>
+      <a
+        href={negocio.instagram}
+        class="menu-instagram"
+        target="_blank"
+        rel="noopener"
+      >
+        {negocio.instagramUsuario}
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .cabecera {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgb(255 255 255 / 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--borde);
+  }
+
+  .cabecera-fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e-4);
+    min-height: var(--alto-header);
+  }
+
+  .cabecera-marca {
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  /* --- Navegación de escritorio --- */
+  .nav-escritorio {
+    display: none;
+  }
+
+  .nav-escritorio ul {
+    display: flex;
+    align-items: center;
+    gap: var(--e-1);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .nav-escritorio a {
+    display: block;
+    padding: var(--e-2) var(--e-4);
+    border-radius: var(--radio-full);
+    color: var(--texto-suave);
+    font-size: var(--txt-sm);
+    font-weight: var(--peso-semi);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color var(--transicion), background-color var(--transicion);
+  }
+
+  .nav-escritorio a:hover {
+    color: var(--azul-700);
+    background: var(--azul-50);
+  }
+
+  .nav-escritorio a[aria-current='page'] {
+    color: var(--azul-700);
+    background: var(--azul-100);
+  }
+
+  /* --- Acciones --- */
+  .cabecera-acciones {
+    display: flex;
+    align-items: center;
+    gap: var(--e-2);
+    flex-shrink: 0;
+  }
+
+  .enlace-telefono {
+    display: none;
+    align-items: center;
+    gap: var(--e-2);
+    color: var(--azul-800);
+    font-size: var(--txt-sm);
+    font-weight: var(--peso-bold);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .enlace-telefono svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .enlace-telefono:hover {
+    color: var(--azul-600);
+  }
+
+  .boton-cotizar {
+    display: none;
+    min-height: 42px;
+    padding-inline: var(--e-5);
+    font-size: var(--txt-sm);
+  }
+
+  /* --- Botón hamburguesa --- */
+  .boton-menu {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--gris-300);
+    border-radius: var(--radio);
+    cursor: pointer;
+  }
+
+  .hamburguesa,
+  .hamburguesa::before,
+  .hamburguesa::after {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--azul-900);
+    border-radius: 2px;
+    transition: transform var(--transicion), opacity var(--transicion);
+  }
+
+  .hamburguesa {
+    position: relative;
+  }
+
+  .hamburguesa::before,
+  .hamburguesa::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+
+  .hamburguesa::before {
+    top: -6px;
+  }
+  .hamburguesa::after {
+    top: 6px;
+  }
+
+  .boton-menu[aria-expanded='true'] .hamburguesa {
+    background: transparent;
+  }
+  .boton-menu[aria-expanded='true'] .hamburguesa::before {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .boton-menu[aria-expanded='true'] .hamburguesa::after {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* --- Menú móvil --- */
+  .menu-movil {
+    border-top: 1px solid var(--borde);
+    background: var(--blanco);
+    padding: var(--e-4) var(--gutter) var(--e-6);
+    max-height: calc(100dvh - var(--alto-header));
+    overflow-y: auto;
+  }
+
+  .menu-movil[hidden] {
+    display: none;
+  }
+
+  .menu-movil ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--e-5);
+  }
+
+  .menu-movil li + li {
+    border-top: 1px solid var(--gris-100);
+  }
+
+  .menu-movil nav a {
+    display: block;
+    padding: var(--e-4) var(--e-2);
+    color: var(--azul-900);
+    font-size: var(--txt-lg);
+    font-weight: var(--peso-semi);
+    text-decoration: none;
+  }
+
+  .menu-movil nav a[aria-current='page'] {
+    color: var(--azul-600);
+  }
+
+  .menu-movil-pie {
+    display: flex;
+    flex-direction: column;
+    gap: var(--e-3);
+    align-items: stretch;
+  }
+
+  .menu-instagram {
+    text-align: center;
+    font-size: var(--txt-sm);
+    font-weight: var(--peso-semi);
+    color: var(--texto-tenue);
+    text-decoration: none;
+    padding: var(--e-2);
+  }
+
+  /* --- Breakpoints --- */
+  @media (min-width: 640px) {
+    .enlace-telefono {
+      display: inline-flex;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .nav-escritorio {
+      display: block;
+    }
+    .boton-cotizar {
+      display: inline-flex;
+    }
+    .boton-menu {
+      display: none;
+    }
+    .menu-movil {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  const boton = document.getElementById('boton-menu');
+  const menu = document.getElementById('menu-movil');
+
+  if (boton && menu) {
+    const alternar = (abrir: boolean) => {
+      boton.setAttribute('aria-expanded', String(abrir));
+      boton.setAttribute('aria-label', abrir ? 'Cerrar menú' : 'Abrir menú');
+      menu.hidden = !abrir;
+    };
+
+    boton.addEventListener('click', () => {
+      alternar(boton.getAttribute('aria-expanded') !== 'true');
+    });
+
+    // Cerrar al navegar a un ancla o al presionar Escape.
+    menu.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) alternar(false);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !menu.hidden) {
+        alternar(false);
+        boton.focus();
+      }
+    });
+
+    // Si se agranda la ventana con el menú abierto, resetear el estado.
+    const mq = window.matchMedia('(min-width: 1024px)');
+    mq.addEventListener('change', (e) => {
+      if (e.matches) alternar(false);
+    });
+  }
+</script>

@@ -1,0 +1,438 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Icono from '../components/Icono.astro';
+import TarjetaServicio from '../components/TarjetaServicio.astro';
+import FormularioCotizacion from '../components/FormularioCotizacion.astro';
+import ListaFaq from '../components/ListaFaq.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+
+import { servicios } from '../data/servicios.js';
+import { comunas } from '../data/comunas.js';
+import { faq } from '../data/faq.js';
+import { foto } from '../lib/imagenes.js';
+import { negocioLocal, sitioWebSchema, faqSchema } from '../lib/jsonld.js';
+
+const fotoRotulada = foto('camion-rotulado-cliente-empresa.jpg');
+const faqDestacadas = faq.slice(0, 5);
+
+const comoTrabajamos = [
+  {
+    icono: 'whatsapp',
+    titulo: 'Nos escribís',
+    texto:
+      'Por WhatsApp o con el formulario. Contanos qué hay que mover, de dónde a dónde y para cuándo.',
+  },
+  {
+    icono: 'reloj',
+    titulo: 'Te cotizamos',
+    texto:
+      'Te respondemos con un valor cerrado, sin sorpresas al final. Cotizar no tiene costo.',
+  },
+  {
+    icono: 'calendario',
+    titulo: 'Agendamos',
+    texto:
+      'Fijamos día y hora. Trabajamos de lunes a domingo, también fines de semana.',
+  },
+  {
+    icono: 'camion',
+    titulo: 'Movemos',
+    texto:
+      'Llegamos, aseguramos la carga con fajas y la dejamos en destino en el mismo estado.',
+  },
+];
+
+const razones = [
+  {
+    icono: 'camion',
+    titulo: 'Camión propio de 1,5 toneladas',
+    texto:
+      'No subcontratamos. El mismo camión y la misma persona que cotiza es la que llega.',
+  },
+  {
+    icono: 'fajas',
+    titulo: 'Carga siempre asegurada',
+    texto:
+      'Fajas, amarras y esquineros en cada viaje. Con embalaje opcional de film y cartón.',
+  },
+  {
+    icono: 'reloj',
+    titulo: 'Respuesta rápida por WhatsApp',
+    texto:
+      'Sin formularios eternos ni esperas de días. Escribís y te contestamos.',
+  },
+  {
+    icono: 'escudo',
+    titulo: 'Trabajamos con empresas',
+    texto:
+      'Retiros programados para constructoras, empresas de climatización e instaladores.',
+  },
+];
+
+const jsonLd = [
+  negocioLocal({ comunas }),
+  sitioWebSchema(),
+  faqSchema(faqDestacadas),
+];
+---
+
+<Base
+  titulo="Fletes y Mudanzas en Santiago | Fletes Matcris"
+  descripcion="Fletes, mudanzas y transporte de carga en Santiago y toda la Región Metropolitana. Camión propio de 1,5 t, ayudante opcional y cotización sin costo por WhatsApp."
+  sufijoTitulo={false}
+  jsonLd={jsonLd}
+>
+  <Hero />
+
+  <!-- Cómo trabajamos -->
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="encabezado-seccion centrado">
+        <span class="antetitulo">Simple y sin vueltas</span>
+        <h2>Cómo trabajamos</h2>
+        <p>Cuatro pasos desde que nos escribís hasta que tu carga está en destino.</p>
+      </div>
+
+      <ol class="pasos">
+        {
+          comoTrabajamos.map((paso, i) => (
+            <li class="paso">
+              <span class="paso-numero" aria-hidden="true">
+                {i + 1}
+              </span>
+              <span class="paso-icono" aria-hidden="true">
+                <Icono nombre={paso.icono} />
+              </span>
+              <h3>{paso.titulo}</h3>
+              <p>{paso.texto}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Servicios -->
+  <section class="seccion seccion-alt" id="servicios">
+    <div class="contenedor">
+      <div class="encabezado-seccion centrado">
+        <span class="antetitulo">Qué hacemos</span>
+        <h2>Nuestros servicios</h2>
+        <p>
+          Desde una mudanza de departamento hasta el retiro programado de
+          materiales para tu empresa.
+        </p>
+      </div>
+
+      <div class="grilla grilla-4">
+        {
+          servicios.map((s, i) => (
+            <TarjetaServicio servicio={s} prioridad={i < 2} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Por qué elegirnos -->
+  <section class="seccion">
+    <div class="contenedor bloque-razones">
+      <div class="razones-texto">
+        <span class="antetitulo">Por qué nosotros</span>
+        <h2>Un flete que llega cuando dice que llega</h2>
+        <p class="razones-bajada">
+          Trabajamos con empresas de climatización, instaladores y constructoras
+          que dependen de que el material esté a tiempo en obra. Esa misma
+          puntualidad la aplicamos a las mudanzas de casa.
+        </p>
+
+        <ul class="razones-lista">
+          {
+            razones.map((r) => (
+              <li>
+                <span class="razon-icono" aria-hidden="true">
+                  <Icono nombre={r.icono} />
+                </span>
+                <span>
+                  <strong>{r.titulo}</strong>
+                  <span class="razon-texto">{r.texto}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <figure class="razones-figura">
+        <Image
+          src={fotoRotulada}
+          alt="Camión de Fletes Matcris rotulado, cargado con material de aislación junto al camión de una empresa cliente"
+          widths={[600, 900, 1200, 1599]}
+          sizes="(min-width: 1024px) 520px, 92vw"
+          loading="lazy"
+        />
+        <figcaption>
+          Retiro de material de aislación para una empresa de climatización en Santiago.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Cobertura -->
+  <section class="seccion seccion-alt">
+    <div class="contenedor">
+      <div class="encabezado-seccion centrado">
+        <span class="antetitulo">Dónde llegamos</span>
+        <h2>Cobertura en la Región Metropolitana</h2>
+        <p>
+          Trabajamos en todo el Gran Santiago. Estas son las comunas donde más
+          nos piden servicio.
+        </p>
+      </div>
+
+      <ul class="lista-comunas">
+        {
+          comunas.map((c) => (
+            <li>
+              <a href={`/fletes-en/${c.slug}`}>
+                <Icono nombre="mapa" />
+                {c.nombre}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="comunas-nota">
+        ¿No ves tu comuna? Igual llegamos.
+        <a href="/cobertura">Mirá la cobertura completa</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Formulario -->
+  <FormularioCotizacion />
+
+  <!-- FAQ -->
+  <section class="seccion">
+    <div class="contenedor-angosto">
+      <div class="encabezado-seccion centrado">
+        <span class="antetitulo">Dudas frecuentes</span>
+        <h2>Lo que más nos preguntan</h2>
+      </div>
+
+      <ListaFaq preguntas={faqDestacadas} />
+
+      <p class="faq-mas">
+        <a href="/preguntas-frecuentes">Ver todas las preguntas frecuentes</a>
+      </p>
+    </div>
+  </section>
+
+  <CtaFinal />
+</Base>
+
+<style>
+  /* --- Pasos --- */
+  .pasos {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--e-6);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: paso;
+  }
+
+  .paso {
+    position: relative;
+    padding: var(--e-6) var(--e-5) var(--e-5);
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-lg);
+  }
+
+  .paso-numero {
+    position: absolute;
+    top: var(--e-4);
+    right: var(--e-5);
+    font-size: 2.5rem;
+    font-weight: var(--peso-black);
+    line-height: 1;
+    color: var(--azul-100);
+  }
+
+  .paso-icono {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: var(--e-4);
+    border-radius: var(--radio);
+    background: var(--azul-50);
+    color: var(--azul-600);
+  }
+
+  .paso h3 {
+    font-size: var(--txt-h4);
+    color: var(--azul-900);
+    margin-bottom: var(--e-2);
+  }
+
+  .paso p {
+    font-size: var(--txt-sm);
+    line-height: 1.65;
+    color: var(--texto-suave);
+  }
+
+  /* --- Razones --- */
+  .bloque-razones {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 1.5rem + 3vw, 4rem);
+    align-items: center;
+  }
+
+  .razones-texto h2 {
+    margin-bottom: var(--e-4);
+    color: var(--azul-900);
+  }
+
+  .razones-bajada {
+    font-size: var(--txt-lg);
+    color: var(--texto-suave);
+    margin-bottom: var(--e-8);
+    max-width: 52ch;
+  }
+
+  .razones-lista {
+    display: flex;
+    flex-direction: column;
+    gap: var(--e-5);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .razones-lista li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--e-4);
+  }
+
+  .razon-icono {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radio);
+    background: var(--azul-50);
+    color: var(--azul-600);
+  }
+
+  .razones-lista strong {
+    display: block;
+    font-size: var(--txt-base);
+    font-weight: var(--peso-bold);
+    color: var(--azul-900);
+    margin-bottom: 2px;
+  }
+
+  .razon-texto {
+    display: block;
+    font-size: var(--txt-sm);
+    line-height: 1.6;
+    color: var(--texto-suave);
+  }
+
+  .razones-figura {
+    margin: 0;
+  }
+
+  .razones-figura :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radio-xl);
+    box-shadow: var(--sombra-lg);
+  }
+
+  .razones-figura figcaption {
+    margin-top: var(--e-3);
+    font-size: var(--txt-xs);
+    color: var(--texto-tenue);
+    text-align: center;
+  }
+
+  /* --- Comunas --- */
+  .lista-comunas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--e-3);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .lista-comunas a {
+    display: flex;
+    align-items: center;
+    gap: var(--e-2);
+    min-height: 52px;
+    padding: var(--e-3) var(--e-4);
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    font-size: var(--txt-sm);
+    font-weight: var(--peso-semi);
+    color: var(--azul-900);
+    text-decoration: none;
+    transition: border-color var(--transicion), transform var(--transicion),
+      box-shadow var(--transicion);
+  }
+
+  .lista-comunas a:hover {
+    border-color: var(--azul-500);
+    transform: translateY(-2px);
+    box-shadow: var(--sombra);
+  }
+
+  .lista-comunas :global(.icono) {
+    width: 17px;
+    height: 17px;
+    color: var(--azul-600);
+    flex-shrink: 0;
+  }
+
+  .comunas-nota {
+    margin-top: var(--e-6);
+    text-align: center;
+    font-size: var(--txt-sm);
+    color: var(--texto-tenue);
+  }
+
+  .faq-mas {
+    margin-top: var(--e-6);
+    text-align: center;
+    font-size: var(--txt-sm);
+    font-weight: var(--peso-semi);
+  }
+
+  /* --- Breakpoints --- */
+  @media (min-width: 640px) {
+    .pasos {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .pasos {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .bloque-razones {
+      grid-template-columns: 1fr minmax(400px, 520px);
+    }
+  }
+</style>

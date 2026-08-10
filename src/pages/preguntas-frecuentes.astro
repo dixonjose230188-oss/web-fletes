@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import Migas from '../components/Migas.astro';
+import ListaFaq from '../components/ListaFaq.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+
+import { faq } from '../data/faq.js';
+import { migasSchema, negocioLocal, faqSchema } from '../lib/jsonld.js';
+
+const migas = [
+  { texto: 'Inicio', href: '/' },
+  { texto: 'Preguntas frecuentes', href: '/preguntas-frecuentes' },
+];
+---
+
+<Base
+  titulo="Preguntas frecuentes sobre fletes y mudanzas"
+  descripcion="Precios, horarios, ayudante, acceso sin ascensor, capacidad del camión y facturación. Todo lo que nos preguntan antes de contratar un flete en Santiago."
+  jsonLd={[migasSchema(migas), negocioLocal(), faqSchema(faq)]}
+>
+  <Migas items={migas} />
+
+  <section class="seccion">
+    <div class="contenedor-angosto">
+      <div class="encabezado-seccion">
+        <span class="antetitulo">Antes de contratar</span>
+        <h1>Preguntas frecuentes</h1>
+        <p>
+          Las dudas que más nos llegan por WhatsApp. Si la tuya no está acá,
+          escribinos y te respondemos.
+        </p>
+      </div>
+
+      <ListaFaq preguntas={faq} />
+    </div>
+  </section>
+
+  <CtaFinal
+    titulo="¿Te quedó alguna duda?"
+    texto="Escribinos por WhatsApp y te respondemos. Sin compromiso."
+    mensaje="Hola, tengo una consulta sobre el servicio."
+  />
+</Base>

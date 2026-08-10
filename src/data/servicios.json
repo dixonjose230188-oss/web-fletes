@@ -1,0 +1,100 @@
+{
+  "servicios": [
+    {
+      "slug": "transporte-de-carga",
+      "titulo": "Transporte de carga",
+      "tituloCorto": "Transporte de carga",
+      "icono": "camion",
+      "foto": "transporte-equipos-climatizacion.jpg",
+      "fotoAlt": "Camión de Fletes Matcris cargado con equipos de aire acondicionado en una bodega de Santiago",
+      "resumen": "Traslado de mercadería, equipos y materiales entre bodegas, obras y locales. Con amarras y protección incluidas.",
+      "metaTitulo": "Transporte de carga en Santiago",
+      "metaDescripcion": "Transporte de carga y mercadería en Santiago y la Región Metropolitana. Equipos, materiales y pallets con amarre asegurado. Cotiza por WhatsApp.",
+      "intro": "Movemos carga entre bodegas, obras, locales comerciales y domicilios dentro de la Región Metropolitana. Es el servicio que más hacemos: retiro programado de mercadería, equipos y materiales para empresas que necesitan un transporte confiable y puntual.",
+      "incluye": [
+        "Camión con capacidad de 1,5 toneladas",
+        "Amarras, fajas y esquineros para asegurar la carga",
+        "Coordinación de horario de retiro y entrega",
+        "Documentación de respaldo si tu empresa la requiere"
+      ],
+      "ideal": [
+        "Equipos de climatización y ventilación",
+        "Materiales de construcción y aislación",
+        "Pallets, cajas y mercadería de bodega",
+        "Perfiles, tubos y piezas de largo mediano"
+      ]
+    },
+    {
+      "slug": "mudanzas",
+      "titulo": "Mudanzas de casa y departamento",
+      "tituloCorto": "Mudanzas",
+      "icono": "casa",
+      "foto": "mudanza-casa-santiago.jpg",
+      "fotoAlt": "Camión de Fletes Matcris cargado con muebles, colchones y un refrigerador durante una mudanza en Santiago",
+      "resumen": "Traslado completo de tu hogar. Con o sin ayudante, según cuánto quieras hacer tú.",
+      "metaTitulo": "Mudanzas en Santiago",
+      "metaDescripcion": "Mudanzas de casa y departamento en Santiago y la Región Metropolitana. Con ayudante opcional y embalaje. Cotización sin costo por WhatsApp.",
+      "intro": "Hacemos mudanzas de casas, departamentos y piezas dentro de la Región Metropolitana. Podés contratar solo el traslado, si vos te encargás de cargar y descargar, o sumar ayudante para que nos hagamos cargo de todo.",
+      "incluye": [
+        "Traslado puerta a puerta dentro de la Región Metropolitana",
+        "Ayudante opcional para carga y descarga",
+        "Protección de colchones y muebles con film",
+        "Coordinación de fecha y horario, incluidos fines de semana"
+      ],
+      "ideal": [
+        "Mudanzas de departamento de 1 a 3 ambientes",
+        "Traslado de piezas y mudanzas parciales",
+        "Entrega de muebles comprados por internet",
+        "Cambios de casa dentro de la misma comuna"
+      ]
+    },
+    {
+      "slug": "retiro-de-materiales",
+      "titulo": "Retiro de materiales y escombros",
+      "tituloCorto": "Retiro de materiales",
+      "icono": "caja",
+      "foto": "transporte-materiales-construccion.jpg",
+      "fotoAlt": "Camión de Fletes Matcris cargado con rollos de aislación térmica asegurados con fajas",
+      "resumen": "Retiramos excedentes, materiales y escombros directo desde tu obra o local.",
+      "metaTitulo": "Retiro de escombros y materiales en Santiago",
+      "metaDescripcion": "Retiro de escombros, excedentes y materiales de obra en Santiago. Servicio para empresas y particulares. Coordina el retiro por WhatsApp.",
+      "intro": "Retiramos materiales sobrantes, excedentes de obra y escombros desde tu lugar de trabajo, sin que tengas que mover nada hasta la calle. Coordinamos el retiro en el horario que te sirva.",
+      "incluye": [
+        "Retiro en el domicilio, obra o local",
+        "Carga por parte de nuestro personal (con ayudante contratado)",
+        "Traslado a punto de disposición",
+        "Retiros programados y recurrentes para empresas"
+      ],
+      "ideal": [
+        "Excedentes de remodelación y obra menor",
+        "Restos de embalaje y material de descarte",
+        "Equipos y muebles dados de baja",
+        "Limpieza de bodegas y locales"
+      ]
+    },
+    {
+      "slug": "embalaje",
+      "titulo": "Servicio de embalaje",
+      "tituloCorto": "Embalaje",
+      "icono": "escudo",
+      "foto": "mudanza-colchones-cajas.jpg",
+      "fotoAlt": "Colchones protegidos con plástico y cajas cargadas en el camión de Fletes Matcris",
+      "resumen": "Protegemos tu carga con film y cartón para que llegue igual que salió.",
+      "metaTitulo": "Servicio de embalaje para mudanzas en Santiago",
+      "metaDescripcion": "Embalaje profesional para mudanzas en Santiago: film, cartón y protección de muebles y colchones. Consulta por WhatsApp.",
+      "intro": "El embalaje es lo que separa una mudanza tranquila de una con sorpresas. Protegemos muebles, colchones y objetos frágiles con film y cartón antes de subirlos al camión.",
+      "incluye": [
+        "Film protector para muebles y colchones",
+        "Cartón corrugado para superficies delicadas",
+        "Esquineros y fajas para fijar la carga",
+        "Se puede contratar junto con la mudanza o por separado"
+      ],
+      "ideal": [
+        "Colchones y sommiers",
+        "Muebles con superficies pintadas o de vidrio",
+        "Electrodomésticos",
+        "Objetos frágiles y equipos delicados"
+      ]
+    }
+  ]
+}

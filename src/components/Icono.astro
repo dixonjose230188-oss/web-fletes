@@ -1,0 +1,55 @@
+---
+/**
+ * Íconos SVG en línea. Reemplazan a lucide-react: cero JavaScript,
+ * cero peticiones extra, y se pintan con currentColor.
+ */
+interface Props {
+  nombre: string;
+  class?: string;
+}
+
+const { nombre, class: clase = '' } = Astro.props;
+
+const trazos: Record<string, string> = {
+  camion:
+    'M2 7h11v9H2zM13 10h4.2a2 2 0 0 1 1.7.95l1.9 3.1a2 2 0 0 1 .2.95V16h-8zM7 16a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM17.5 16a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z',
+  casa: 'M3 10.5 12 3l9 7.5M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5M9.5 21v-6h5v6',
+  caja: 'M3 7.5 12 3l9 4.5M3 7.5V17l9 4.5M3 7.5l9 4.5m0 9V12m0 9 9-4.5V7.5M12 12l9-4.5',
+  escudo:
+    'M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6L12 3Zm-2.2 9.2 1.9 1.9 3.6-3.8',
+  reloj: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 7v5.2l3.2 1.9',
+  whatsapp:
+    'M20.5 11.6a8.4 8.4 0 0 1-12.3 7.4L3.5 20.5l1.6-4.6a8.4 8.4 0 1 1 15.4-4.3Z',
+  mapa: 'M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11ZM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z',
+  check: 'm4.5 12.5 5 5 10-11',
+  telefono:
+    'M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.6a1 1 0 0 1-.25 1l-2.22 2.2Z',
+  fajas: 'M4 4v16M20 4v16M4 9h16M4 15h16',
+  calendario:
+    'M7 3v3M17 3v3M4 8h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z',
+};
+
+const d = trazos[nombre] ?? trazos.check;
+---
+
+<svg
+  class:list={['icono', clase]}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.8"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  <path d={d}></path>
+</svg>
+
+<style>
+  .icono {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+</style>
