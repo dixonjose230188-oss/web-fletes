@@ -7,7 +7,9 @@
  * sacás herramientas sin volver a tocar el código ni redesplegar.
  */
 export const analitica = {
-  // Contenedor "fletesmatcris.cl" de la cuenta "Fletes Matcris".
+  // Contenedor "fletesmatcris.cl" de la cuenta "Fletes Matcris" en GTM.
+  // (El nombre de la cuenta en GTM quedó con la grafía anterior; no
+  // afecta a la medición, pero conviene renombrarla cuando se pueda.)
   gtmId: 'GTM-M6HSMWP7',
 
   // Alternativa si preferís GA4 directo, sin GTM. Ej: 'G-XXXXXXXXXX'

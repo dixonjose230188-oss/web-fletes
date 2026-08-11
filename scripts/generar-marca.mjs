@@ -67,16 +67,20 @@ const capaTexto = `<svg xmlns="http://www.w3.org/2000/svg" width="${ANCHO}" heig
 
   <g transform="translate(72, 104) scale(1.5)">${camionSvg('#ffffff')}</g>
 
-  <text x="72" y="270" font-family="Segoe UI, Helvetica, Arial, sans-serif"
-        font-size="70" font-weight="800" fill="#ffffff" letter-spacing="-2">
-    Fletes Matcris
+  <text x="72" y="258" font-family="Segoe UI, Helvetica, Arial, sans-serif"
+        font-size="54" font-weight="700" fill="#e4edfd" letter-spacing="-1">
+    Fletes Transporte
   </text>
-  <text x="72" y="340" font-family="Segoe UI, Helvetica, Arial, sans-serif"
-        font-size="40" font-weight="600" fill="#e4edfd">
-    Fletes y mudanzas en Santiago
+  <text x="72" y="330" font-family="Segoe UI, Helvetica, Arial, sans-serif"
+        font-size="74" font-weight="800" fill="#ffffff" letter-spacing="-2">
+    MatCris
   </text>
-  <text x="72" y="404" font-family="Segoe UI, Helvetica, Arial, sans-serif"
-        font-size="30" font-weight="400" fill="#bcd0f5">
+  <text x="72" y="392" font-family="Segoe UI, Helvetica, Arial, sans-serif"
+        font-size="34" font-weight="600" fill="#bcd0f5">
+    Mudanzas y carga en Santiago
+  </text>
+  <text x="72" y="436" font-family="Segoe UI, Helvetica, Arial, sans-serif"
+        font-size="28" font-weight="400" fill="#9dbaf0">
     Camión propio · Región Metropolitana
   </text>
 

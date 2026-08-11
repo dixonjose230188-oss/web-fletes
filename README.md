@@ -1,4 +1,4 @@
-# Fletes Matcris — sitio web
+# Fletes Transporte MatCris — sitio web
 
 Sitio de [fletesmatcris.cl](https://fletesmatcris.cl), construido con
 [Astro](https://astro.build). Genera **HTML estático**: cada página se sirve ya
@@ -77,20 +77,23 @@ cambiás, se rompen los enlaces y Google pierde lo que ya tenía indexado.
 
 ## ⚠️ Pendientes antes de invertir en Google Ads
 
-### 1. Definir un solo nombre comercial
+### 1. Unificar el nombre en todos los canales
 
-Hoy conviven cuatro identidades distintas:
+El nombre comercial definido es **Fletes Transporte MatCris**. Ya está aplicado
+en el sitio, pero todavía no en el resto:
 
-| Dónde | Dice |
+| Dónde | Estado |
 |---|---|
-| Sitio web y dominio | Fletes Matcris |
-| Puerta del camión | M&M |
-| Baranda del camión | FLETES Y MUDANZAS |
-| Instagram | @fletesmatcris |
+| Sitio web | ✅ Fletes Transporte MatCris |
+| Google Business Profile | ⏳ Debe decir exactamente lo mismo |
+| Instagram (@fletesmatcris) | ⏳ Cambiar el nombre visible del perfil |
+| Cuenta de Google Tag Manager | ⏳ Quedó como "Fletes Matcris" (no afecta la medición) |
+| Rotulación del camión | ⏳ Dice "M&M" y "FLETES Y MUDANZAS" |
 
 Google cruza nombre, dirección y teléfono entre el sitio, el Business Profile y
-las redes. Cuando no coinciden, posiciona peor en el mapa. **Hay que unificarlo
-antes de crear el Google Business Profile.**
+las redes. Cuando no coinciden, posiciona peor en el mapa. El dominio
+`fletesmatcris.cl` no necesita cambiar: no tiene que coincidir literalmente con
+el nombre comercial.
 
 ### 2. Completar datos faltantes
 

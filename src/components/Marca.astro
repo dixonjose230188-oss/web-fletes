@@ -58,8 +58,8 @@ const { variante = 'oscuro', class: clase = '' } = Astro.props;
   </svg>
 
   <span class="marca-texto">
-    <span class="marca-nombre">Fletes <strong>Matcris</strong></span>
-    <span class="marca-bajada">Fletes y mudanzas · Santiago</span>
+    <span class="marca-nombre">Fletes Transporte <strong>MatCris</strong></span>
+    <span class="marca-bajada">Mudanzas y carga · Santiago</span>
   </span>
 </span>
 
@@ -90,7 +90,9 @@ const { variante = 'oscuro', class: clase = '' } = Astro.props;
   }
 
   .marca-nombre {
-    font-size: 1.0625rem;
+    /* "Fletes Transporte MatCris" es largo: en móvil se achica para
+       no empujar al botón de menú ni desbordar el header. */
+    font-size: 0.9375rem;
     font-weight: var(--peso-medio);
     letter-spacing: -0.02em;
     color: var(--azul-900);
@@ -118,13 +120,22 @@ const { variante = 'oscuro', class: clase = '' } = Astro.props;
   }
 
   /* En pantallas muy angostas la bajada se saca para no apretar el header */
-  @media (max-width: 359px) {
+  @media (max-width: 389px) {
     .marca-bajada {
       display: none;
     }
     .marca-icono {
-      width: 34px;
-      height: 25px;
+      width: 32px;
+      height: 23px;
+    }
+    .marca-nombre {
+      font-size: 0.875rem;
+    }
+  }
+
+  @media (min-width: 480px) {
+    .marca-nombre {
+      font-size: 1.0625rem;
     }
   }
 
@@ -134,7 +145,7 @@ const { variante = 'oscuro', class: clase = '' } = Astro.props;
       height: 33px;
     }
     .marca-nombre {
-      font-size: 1.1875rem;
+      font-size: 1.125rem;
     }
     .marca-bajada {
       font-size: 0.75rem;
