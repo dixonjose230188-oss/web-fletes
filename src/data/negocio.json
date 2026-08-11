@@ -17,10 +17,10 @@
     "lng": -70.6693
   },
   "horario": {
-    "texto": "Lunes a domingo, 8:00 a 21:00",
+    "texto": "Lunes a domingo, 6:00 a 22:00",
     "detalle": "Fuera de horario, previa coordinación por WhatsApp.",
-    "abre": "08:00",
-    "cierra": "21:00"
+    "abre": "06:00",
+    "cierra": "22:00"
   },
   "pendientes": {
     "direccion": null,

@@ -102,18 +102,21 @@ En `src/data/negocio.json`, campo `pendientes`:
 - `direccion` — requerida para verificar el Google Business Profile.
 - `rut` — si se va a emitir factura.
 
-### 3. Confirmar supuestos del contenido
+### 3. Datos del negocio — confirmados
 
-Estos textos se escribieron a partir de la web anterior y de las fotos. **Hay
-que confirmarlos o corregirlos** — si prometen algo que no se cumple, además de
-perder clientes, Google puede penalizar los datos estructurados:
+Confirmados por el dueño el 10 de agosto de 2026:
 
-| Dónde | Supuesto |
+| Dato | Valor |
 |---|---|
-| `faq.json` | Que se emite boleta y factura |
-| `faq.json` / `negocio.json` | Horario de lunes a domingo, 8:00 a 21:00 |
-| Home y servicios | Capacidad del camión: 1,5 toneladas |
-| `faq.json` | Cobertura habitual = toda la Región Metropolitana |
+| Boleta y factura | Sí, ambos |
+| Horario | Lunes a domingo, **6:00 a 22:00** |
+| Capacidad del camión | 1,5 toneladas |
+| Cobertura | Toda la Región Metropolitana |
+
+El horario vive en `src/data/negocio.json` y alimenta a la vez el texto visible,
+el pie de página y el `openingHoursSpecification` del JSON-LD. Si cambia, hay
+que actualizarlo también en el Google Business Profile: cuando no coinciden,
+Google muestra el de la ficha y desconfía del sitio.
 
 ### 4. Conectar la medición
 
