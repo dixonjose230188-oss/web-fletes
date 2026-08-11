@@ -7,8 +7,8 @@
  * sacás herramientas sin volver a tocar el código ni redesplegar.
  */
 export const analitica = {
-  // Ej: 'GTM-ABC1234' — se obtiene en tagmanager.google.com
-  gtmId: '',
+  // Contenedor "fletesmatcris.cl" de la cuenta "Fletes Matcris".
+  gtmId: 'GTM-M6HSMWP7',
 
   // Alternativa si preferís GA4 directo, sin GTM. Ej: 'G-XXXXXXXXXX'
   ga4Id: '',
