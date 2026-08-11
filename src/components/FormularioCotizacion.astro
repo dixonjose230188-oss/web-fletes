@@ -687,7 +687,16 @@ const accesos = ['Casa en primer piso', 'Departamento con ascensor', 'Escaleras'
 
       const datos = new FormData(form);
       const v = (clave: string) => String(datos.get(clave) ?? '').trim();
+
+      /** Para el mensaje de WhatsApp, que lo lee una persona. */
       const marcado = (clave: string) => (datos.get(clave) ? 'Sí' : 'No');
+
+      /**
+       * Para la analítica, que la leen máquinas. Un "Sí" con tilde
+       * obliga a escribir el acento al armar audiencias o segmentos en
+       * GA4 y se presta a errores; el booleano no tiene ese problema.
+       */
+      const activo = (clave: string) => Boolean(datos.get(clave));
 
       const lineas = [
         `Hola ${negocio.nombre}, quiero cotizar un flete.`,
@@ -723,8 +732,8 @@ const accesos = ['Casa en primer piso', 'Departamento con ascensor', 'Escaleras'
       window.registrarEvento?.('cotizacion_enviada', {
         origen: 'formulario',
         servicio: v('servicio'),
-        con_ayudante: marcado('ayudante'),
-        con_embalaje: marcado('embalaje'),
+        con_ayudante: activo('ayudante'),
+        con_embalaje: activo('embalaje'),
       });
 
       window.open(`https://wa.me/${negocio.whatsapp}?text=${mensaje}`, '_blank', 'noopener');
