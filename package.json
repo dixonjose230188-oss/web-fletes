@@ -9,7 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "verificar": "npm run build && node scripts/verificar-html.mjs && node scripts/verificar-enlaces.mjs",
+    "verificar": "npm run build && node scripts/verificar-html.mjs && node scripts/verificar-enlaces.mjs && node scripts/verificar-analitica.mjs",
     "fotos": "node scripts/preparar-fotos.mjs",
     "marca": "node scripts/generar-marca.mjs"
   },

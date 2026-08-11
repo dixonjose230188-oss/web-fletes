@@ -8,10 +8,26 @@ import { analitica } from '../data/analitica.js';
 const { gtmId, ga4Id } = analitica;
 ---
 
+{/*
+  OJO: dentro de un <script> de Astro el contenido es texto crudo, NO se
+  interpola como en JSX. Envolver el código en {`...`} hace que las llaves
+  y las comillas invertidas terminen literales en el JavaScript servido,
+  convirtiendo el snippet en un bloque inerte que nunca se ejecuta.
+  El código va escrito directo; `define:vars` inyecta las variables antes.
+*/}
 {
   gtmId && (
     <script is:inline define:vars={{ gtmId }}>
-      {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);`}
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', gtmId);
     </script>
   )
 }
@@ -19,13 +35,14 @@ const { gtmId, ga4Id } = analitica;
 {
   !gtmId && ga4Id && (
     <>
-      <script
-        is:inline
-        async
-        src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}
-      />
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`} />
       <script is:inline define:vars={{ ga4Id }}>
-        {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config',ga4Id);`}
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', ga4Id);
       </script>
     </>
   )
