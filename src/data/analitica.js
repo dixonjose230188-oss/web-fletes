@@ -18,8 +18,14 @@ export const analitica = {
   // Verificación de propiedad del sitio (meta tags).
   // Search Console permite verificar por DNS o por archivo; si usás
   // el método de etiqueta HTML, el valor va acá.
+  // Google se verificó por DNS (propiedad de tipo Dominio), así que su
+  // etiqueta queda vacía: el método de etiqueta HTML solo aplica a las
+  // propiedades de tipo Prefijo de URL.
   googleSiteVerification: '',
-  bingSiteVerification: '',
+
+  // Bing sí se verifica por etiqueta. NO quitar una vez verificado:
+  // Bing la relee periódicamente para mantener la verificación activa.
+  bingSiteVerification: 'E760BDA3E229C2B1F214168266C543FF',
 };
 
 export const hayAnalitica = () =>
